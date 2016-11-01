@@ -11,7 +11,17 @@ $('#load-close').click(function(){
 	map.addControl(L.control.attribution({position: 'bottomright'}));
 });
 
+$('li').click(function() {
+      $("li.active").removeClass("active");
+      $(this).addClass('active');
+});
+
+$('#home').click(function() {
+	
+});
+
 $('#add').click(function() {
+	
 	if (drawControl === undefined) {
 		var featureGroup = L.featureGroup().addTo(map);
 		var drawControl = new L.Control.Draw({
@@ -42,4 +52,8 @@ $('#add').click(function() {
 		    featureGroup.addLayer(e.layer);
 		});
 	}
+});
+
+$('#list').click(function() {
+	
 });
