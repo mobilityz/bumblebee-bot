@@ -29,6 +29,7 @@ $('#add').click(function() {
 		  	polyline: false,
 		  	marker: false,
 		  	circle: false,
+		  	rectangle: false,
 		  	polygon: {
 		  		shapeOptions: {
                 	color: '#F8D45C'
