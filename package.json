@@ -1,0 +1,23 @@
+{
+  "name": "ratchet-bot",
+  "version": "1.0.0",
+  "description": "Generate realtime driver bots with trips",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ecotaco/ratchet-bot.git"
+  },
+  "author": "Maxime Lenne, Gabriel de Vareilles, (http://mobilityz.io)",
+  "license": "(MIT)",
+  "bugs": {
+    "url": "https://github.com/Ecotaco/ratchet-bot/issues"
+  },
+  "homepage": "https://github.com/Ecotaco/ratchet-bot#readme"
+}
