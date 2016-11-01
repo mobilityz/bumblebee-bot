@@ -2,8 +2,8 @@ var mapboxKey = "pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJSdVhjNWNFIn0.RpDj8wWWyvN41W-LjSKc
 L.mapbox.accessToken = mapboxKey;
 var options = {zoomControl: false, attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>',
         unloadInvisibleTiles: true, detectRetina: true}
-var map = L.map('map', options).setView([38.89399, -77.03659], 17);
-var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/cisg4kbkt006c2xp8kerbz7nn').addTo(map);
+var map = L.map('map', options).setView([50.632854, 3.021342], 12);
+var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d3pugthb').addTo(map);
 
 $('#load-close').click(function(){
 	$('#load').addClass('animated slideOutUp');
