@@ -10,6 +10,7 @@
         <title>Ratchet Bot</title>
 
     <meta name="description" content="Ratchet Bot">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
   	<![endif]-->
@@ -17,9 +18,11 @@
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link href="/css/main.css" rel="stylesheet">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+
+    <link href="/css/main.css" rel="stylesheet">
 
   </head>
 
@@ -38,7 +41,7 @@
             </a>
             <p class="lead">Generate realtime driver bot with random trips.</p>
             <p class="lead">
-              <a href="#" class="btn btn-lg btn-default" id=load-close>Let's go !</a>
+              <a href="#" class="btn btn-lg btn-default" id="load-close">Let's go !</a>
             </p>
           </div>
 
@@ -54,11 +57,11 @@
 
     </div>
 
-    <div class="site-wrapper">
+    <div class="site-wrapper" id="main">
 
       <div class="site-wrapper-inner">
 
-        <div class="cover-container">
+        <div class="">
 
           <div class="masthead clearfix">
             <header class="inner">
@@ -76,13 +79,7 @@
             </header>
           </div>
 
-          <div class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-            <p class="lead">
-              <a href="#" class="btn btn-lg btn-default">Learn more</a>
-            </p>
-          </div>
+          <div id='map'></div>
 
           <div class="mastfoot">
             <div class="inner">
@@ -101,6 +98,8 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.0/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.0/leaflet.draw.js"></script>
     <script src="/js/main.js"></script>
   </body>
 </html>
