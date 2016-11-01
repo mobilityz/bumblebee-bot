@@ -47,6 +47,7 @@ body {
 #load {
   position: fixed;
   background-color: #333;
+  z-index: 10;
 }
 .site-wrapper-inner {
   display: table-cell;
