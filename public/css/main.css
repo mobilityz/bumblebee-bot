@@ -49,6 +49,16 @@ body {
   background-color: #333;
   z-index: 10;
 }
+.masthead-brand h1, .masthead-brand img {
+  display: inline-block;
+}
+.masthead-brand h1 {
+  vertical-align: middle;
+  color:#F8D45C ;
+}
+.masthead-brand img {
+  margin-right:2rem;
+}
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
@@ -71,7 +81,9 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
+.masthead-nav {
+  margin-top: 3.5rem;
+}
 .masthead-nav > li {
   display: inline-block;
 }
