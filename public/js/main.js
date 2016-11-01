@@ -1,13 +1,14 @@
 var mapboxKey = "pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJjaXYwMG1vN3cwMDNqMm5yMXdmMnRma3NpIn0.2C4J5O3_Lc_mXBZSZ8MNBA";
 L.mapbox.accessToken = mapboxKey;
-var options = {zoomControl: false, attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>',
+var options = {zoomControl: false, attributionControl: false,
         unloadInvisibleTiles: true, detectRetina: true}
 var map = L.map('map', options).setView([50.632854, 3.021342], 11);
-var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d3pugthb').addTo(map);
+var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d3pugthb', options).addTo(map);
 
 $('#load-close').click(function(){
 	$('#load').addClass('animated slideOutUp');
 	map.addControl(L.control.zoom({position: 'topright'}));
+	map.addControl(L.control.attribution({position: 'bottomright'}));
 });
 
 $('#add').click(function() {
