@@ -165,3 +165,9 @@ body {
     width: 700px;
   }
 }
+
+/*
+ * Map
+ */
+
+#map1 { height: 180px; }
