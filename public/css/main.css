@@ -19,6 +19,14 @@ a:hover {
   border: 1px solid #fff;
 }
 
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus  {
+  background-color: #F8D45C;
+  border: 1px solid #F8D45C;
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+}
 
 /*
  * Base structure
@@ -70,7 +78,7 @@ body {
 
 /* Padding for spacing */
 .inner {
-  padding: 30px;
+  
 }
 
 
@@ -81,6 +89,8 @@ body {
   z-index: 9;
   left: 25%;
   width: 50%;
+  background-color: rgba(0,0,0,.75);
+  padding: 0 2rem; 
 }
 .masthead-brand {
   margin-top: 10px;
@@ -191,4 +201,7 @@ body {
  * Map
  */
 
-#map { position:absolute; top:0; bottom:0; width:100%; }
+#map {
+  position:absolute; top:0; bottom:0; width:100%;
+  background-color:#111; 
+}
