@@ -1,4 +1,4 @@
-var mapboxKey = "pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJSdVhjNWNFIn0.RpDj8wWWyvN41W-LjSKc_w";
+var mapboxKey = "pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJjaXYwMG1vN3cwMDNqMm5yMXdmMnRma3NpIn0.2C4J5O3_Lc_mXBZSZ8MNBA";
 L.mapbox.accessToken = mapboxKey;
 var options = {zoomControl: false, attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>',
         unloadInvisibleTiles: true, detectRetina: true}
