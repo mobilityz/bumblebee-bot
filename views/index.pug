@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  #load.site-wrapper
+    .site-wrapper-inner
+      .cover-container
+        .inner.cover
+          a.brand.center-block(href='/', title='home')
+            img.center-block(src='/images/ratchet-bot-transformers.jpg', width='200', title='RatchetBot Logo')
+            h1.center-block.text-center Ratchet Bot
+          p.lead Generate realtime driver bot with random trips.
+          p.lead
+            a#load-close.btn.btn-lg.btn-primary(href='#') Let&apos;s go !
+        .mastfoot
+          .inner
+            p
+              | Made with love by
+              a(href='http://mobilityz.io') mobilityz.io
+  #main.site-wrapper
+    .site-wrapper-inner
+      div
+        .masthead.clearfix
+          header.inner
+            a.masthead-brand(href='/', title='home')
+              img(src='/images/logo.svg', width='50', title='RatchetBot Logo')
+              h1 Ratchet Bot
+            nav
+              ul.nav.masthead-nav
+                li#home.active
+                  a(href='#') Home
+                li
+                  a#add(href='#') Add
+                li
+                  a#list(href='#') List
+        include form.pug
+        #map
+        .mastfoot
+          .inner
+            p
+              | made with love by
+            a(href='http://mobilityz.io') mobilityz.io
