@@ -1,5 +1,5 @@
 {
-  "name": "ratchet-bot",
+  "name": "bumblebee-bot",
   "version": "1.0.0",
   "description": "Generate realtime driver bots with trips",
   "main": "index.js",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ecotaco/ratchet-bot.git"
+    "url": "git+https://github.com/Ecotaco/bumblebee-bot.git"
   },
   "author": "Maxime Lenne, Gabriel de Vareilles, (http://mobilityz.io)",
   "license": "(MIT)",
   "bugs": {
-    "url": "https://github.com/Ecotaco/ratchet-bot/issues"
+    "url": "https://github.com/Ecotaco/bumblebee-bot/issues"
   },
-  "homepage": "https://github.com/Ecotaco/ratchet-bot#readme"
+  "homepage": "https://github.com/Ecotaco/bumblebee-bot#readme"
 }
