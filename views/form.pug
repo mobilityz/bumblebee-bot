@@ -1,6 +1,10 @@
 .form_add(style="z-index: 9;")
-  form
+  form#newBotForm(action="bots", method="post")
     label
-      | Test
-      input(type="text", name="test")
+      | Name
+      input#name(type="text", name="name", required="true")
+    label
+      | Number of driver
+      input#nbDriver(type="number", min="0", value="5", name="nb_driver", required="true")
+
     input(type="submit")

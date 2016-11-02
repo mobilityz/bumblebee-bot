@@ -51,6 +51,18 @@ $('#add').click(function() {
   });
 });
 
+$('#newBotForm').submit(function(e) {
+  e.preventDefault();
+  $.ajax({
+      url: $(e.currentTarget).attr('action'),
+      type: $(e.currentTarget).attr('method'),
+      data: $(e.currentTarget).serialize(),
+      success: function(html) {
+        alert(html);
+      }
+  });
+});
+
 $('#list').click(function() {
   
 });
