@@ -11,11 +11,6 @@ block content
           p.lead Generate realtime driver bot with random trips.
           p.lead
             a#load-close.btn.btn-lg.btn-primary(href='#') Let&apos;s go !
-        .mastfoot
-          .inner
-            p
-              | Made with love by
-              a(href='http://mobilityz.io') mobilityz.io
   #main.site-wrapper
     .site-wrapper-inner
       div
@@ -32,10 +27,10 @@ block content
                   a#add(href='#') Add
                 li
                   a#list(href='#') List
-        include form.pug
         #map
-        .mastfoot
-          .inner
-            p
-              | made with love by
-            a(href='http://mobilityz.io') mobilityz.io
+  .signature
+    p
+      | Made with love by 
+      a(href='http://mobilityz.io') mobilityz.io
+
+    include form.pug

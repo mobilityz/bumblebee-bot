@@ -81,10 +81,6 @@ body
   margin-right: auto
   margin-left: auto
 
-// Padding for spacing
-
-.inner
-
 // Header
 
 #main .masthead
@@ -141,15 +137,16 @@ body
 
 // Footer
 
-.mastfoot
-  color: #999
-  // IE8 proofing
-  color: rgba(255, 255, 255, 0.5)
-
-#main .mastfoot
-  z-index: 9
-  left: 25%
-  width: 50%
+.signature
+  z-index: 10
+  position: fixed
+  bottom: 0
+  left: 0
+  right: 0
+  p
+    color: #999
+    // IE8 proofing
+    color: rgba(255, 255, 255, 0.5)
 
 // Affix and center
 
@@ -158,23 +155,22 @@ body
   .masthead
     position: fixed
     top: 0
-  .mastfoot
-    position: fixed
-    bottom: 0
   // Start the vertical centering
   .site-wrapper-inner
     vertical-align: middle
   // Handle the widths
-  .masthead, .mastfoot, .cover-container
+  .masthead, .cover-container
     width: 100%
     // Must be percentage or pixels for horizontal alignment
 
 @media (min-width: 992px)
-  .masthead, .mastfoot, .cover-container
+  .masthead, .cover-container
     width: 700px
 
-// Map
+form
+  color: black
 
+// Map
 #map
   position: absolute
   top: 0
