@@ -90,6 +90,7 @@ $('#add').click(function() {
         '<input id="swal-input1" class="swal2-input" autofocus>' +
         '<input id="swal-input2" class="swal2-input">',
       confirmButtonText: 'Generate',
+      showCancelButton: true,
     },
   ]
 
@@ -115,6 +116,10 @@ $('#add').click(function() {
 
   map.on('draw:created', function(e) {
     featureGroup.addLayer(e.layer);
+    showSwal();
+  });
+  map.on('draw:editstop', function(e) {
+    //featureGroup.addLayer(e.layer);
     showSwal();
   });
 
