@@ -99,10 +99,11 @@ $('#add').click(function() {
     swal.resetDefaults()
     swal({
       title: 'All done!',
-      html:
+      /*html:
         'Your answers: <pre>' +
           JSON.stringify(result) +
-        '</pre>',
+        '</pre>',*/
+      imageUrl: '/images/bumblebee_transformation.gif', 
       background: '#333',
       confirmButtonColor: '#F8D45C',
       confirmButtonText: 'Lovely!',
