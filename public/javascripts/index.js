@@ -4,25 +4,8 @@ var options = {zoomControl: false, attributionControl: false,
         unloadInvisibleTiles: true, detectRetina: true}
 var map = L.map('map', options).setView([50.632854, 3.021342], 11);
 var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d3pugthb', options).addTo(map);
-
-$('#load-close').click(function(){
-  $('#load').addClass('animated slideOutUp');
-  map.addControl(L.control.zoom({position: 'topright'}));
-  map.addControl(L.control.attribution({position: 'bottomright'}));
-});
-
-$('li').click(function() {
-  $("li.active").removeClass("active");
-  $(this).addClass('active');
-});
-
-$('#home').click(function() {
-  
-});
-
-$('#add').click(function() {
-  var featureGroup = L.featureGroup().addTo(map);
-  var drawControl = new L.Control.Draw({
+var featureGroup = L.featureGroup().addTo(map);
+var drawControl = new L.Control.Draw({
     edit: {
       featureGroup: featureGroup,
       edit: {   // this property shouldn't be needed
@@ -44,11 +27,90 @@ $('#add').click(function() {
         }
       }
     }
-  }).addTo(map);
+  });
+
+$('#load-close').click(function(){
+  $('#load').addClass('animated slideOutUp');
+  map.addControl(L.control.zoom({position: 'topright'}));
+  map.addControl(L.control.attribution({position: 'bottomright'}));
+});
+
+$('li').click(function() {
+  $("li.active").removeClass("active");
+  $(this).addClass('active');
+});
+
+$('#home').click(function() {
+  if ($('.leaflet-draw').is(':visible')) {
+    drawControl.removeFrom(map);
+  }
+});
+
+$('#add').click(function() {
+  if ($('.leaflet-draw').is(':visible')) {
+    drawControl.removeFrom(map);
+  }
+  drawControl.addTo(map);
 
   map.on('draw:created', function(e) {
     featureGroup.addLayer(e.layer);
+    swal.setProgressSteps(1);
+    showSwal();
   });
+
+  swal.setDefaults({
+    animation: false,
+    customClass: 'animated bounceInLeft',
+    progressSteps: ['1', '2', '3'],
+    background: '#333',
+    confirmButtonColor: '#F8D45C'
+  })
+
+  var steps = [
+    {
+      title: 'Draw the area',
+      text: 'Draw the area where the vehicles will be generated.',
+      confirmButtonText: 'Draw &rarr;',
+      showCancelButton: true,
+      preConfirm: function() {
+        return new Promise(function(resolve) {
+              resolve();
+        })
+      }
+    },
+    {
+      title: 'Confirm this area',
+      text: 'Do you confirm this area ?',
+      confirmButtonText: 'Yes &rarr;',
+      showCancelButton: true,
+      cancelButtonText: 'Modify',
+    },
+    {
+      title: 'Generate the bot',
+      html:
+        '<input id="swal-input1" class="swal2-input" autofocus>' +
+        '<input id="swal-input2" class="swal2-input">',
+      confirmButtonText: 'Generate',
+    },
+  ]
+
+  swal.queue(steps).then(function(result) {
+    console.log("test");
+    swal.resetDefaults()
+    swal({
+      title: 'All done!',
+      html:
+        'Your answers: <pre>' +
+          JSON.stringify(result) +
+        '</pre>',
+      background: '#333',
+      confirmButtonColor: '#F8D45C',
+      confirmButtonText: 'Lovely!',
+      showCancelButton: false
+    })
+  }, function() {
+    swal.resetDefaults()
+  })
 });
 
 $('#newBotForm').submit(function(e) {
@@ -64,5 +126,18 @@ $('#newBotForm').submit(function(e) {
 });
 
 $('#list').click(function() {
-  
+  if ($('.leaflet-draw').is(':visible')) {
+    drawControl.removeFrom(map);
+  }
 });
+
+var hideSwal = function() {
+  $('.swal2-container').removeClass('swal2-in')
+  $('.swal2-modal').addClass('swal2-hide')
+  $('.swal2-modal').hide();
+}
+var showSwal = function() {
+  $('.swal2-container').addClass('swal2-in')
+  $('.swal2-modal').removeClass('swal2-hide')
+  $('.swal2-modal').show();
+}
