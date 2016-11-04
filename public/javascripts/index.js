@@ -52,11 +52,7 @@ $('#add').click(function() {
   }
   drawControl.addTo(map);
 
-  map.on('draw:created', function(e) {
-    featureGroup.addLayer(e.layer);
-    swal.setProgressSteps(1);
-    showSwal();
-  });
+  
 
   swal.setDefaults({
     animation: false,
@@ -74,7 +70,10 @@ $('#add').click(function() {
       showCancelButton: true,
       preConfirm: function() {
         return new Promise(function(resolve) {
-              resolve();
+          setTimeout(function() {
+            hideSwal();
+          }, 100)
+          resolve();  
         })
       }
     },
@@ -94,7 +93,7 @@ $('#add').click(function() {
     },
   ]
 
-  swal.queue(steps).then(function(result) {
+  var s = swal.queue(steps).then(function(result) {
     console.log("test");
     swal.resetDefaults()
     swal({
@@ -111,6 +110,14 @@ $('#add').click(function() {
   }, function() {
     swal.resetDefaults()
   })
+
+  console.log(s);
+
+  map.on('draw:created', function(e) {
+    featureGroup.addLayer(e.layer);
+    showSwal();
+  });
+
 });
 
 $('#newBotForm').submit(function(e) {
