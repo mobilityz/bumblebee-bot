@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
+var Bot = require('../models/bot');
+
 /* GET bots listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  Bot.find({}, function(err, bots) {
+    if (err) throw err;
+    res.send(bots);
+  });
 });
 
 router.post('/', function(req, res, next) {
