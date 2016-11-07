@@ -12,7 +12,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  res.sendStatus(200);
+  var newBot = Bot(req.body);
+
+  newBot.save()
+  .then(function(bots) {
+    res.send(bots);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
 });
 
 module.exports = router;

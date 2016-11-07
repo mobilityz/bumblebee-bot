@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var botSchema = new Schema({
-  name: String,
+  name: {type: String, required: true, unique : true},
   zone: Array,
-  nb_driver: Number,
+  nb_driver: {type: Number, default: 1},
   api_key: String,
   json_to_send: String,
   header_to_send: String,
@@ -12,8 +12,16 @@ var botSchema = new Schema({
   http_method: String,
   speed: Number,
   precision: Number,
-  created_at: Date,
+  created_at: { type: Date, default: Date.now },
   updated_at: Date
+});
+
+botSchema.pre('save', function(next) {
+  var currentDate = new Date();
+
+  this.updated_at = currentDate;
+
+  next();
 });
 
 var Bot = mongoose.model('Bot', botSchema);
