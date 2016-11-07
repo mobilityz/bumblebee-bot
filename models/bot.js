@@ -5,16 +5,21 @@ var Schema = mongoose.Schema;
 
 var botSchema = new Schema({
   name: {type: String, unique: true, required: true},
-  zone: Array,
-  nb_driver: {type: Number, default: 1},
+  zone: {
+    type: { type: String, default: 'Polygon'},
+    coordinates: [[ {type: Number, required: true} ]]
+  },
+  nb_driver: {type: Number, default: 1, min: 1},
   api_key: String,
   json_to_send: String,
   header_to_send: String,
   url: String,
   http_method: String,
-  speed: Number,
-  precision: Number
+  speed: {type: Number, default: 30, min: 1},
+  precision: {type: Number, default: 20, min: 1}
 });
+
+botSchema.index({ location : '2dsphere' });
 
 botSchema.plugin(timestamps);
 

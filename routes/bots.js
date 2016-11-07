@@ -3,7 +3,6 @@ var router = express.Router();
 
 var Bot = require('../models/bot');
 
-/* GET bots listing. */
 router.get('/', function(req, res, next) {
   Bot.find({})
   .then(function(bots) {
