@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var timestamps = require('mongoose-timestamp');
+
 var Schema = mongoose.Schema;
 
 var botSchema = new Schema({
@@ -11,18 +13,10 @@ var botSchema = new Schema({
   url: String,
   http_method: String,
   speed: Number,
-  precision: Number,
-  created_at: { type: Date, default: Date.now },
-  updated_at: Date
+  precision: Number
 });
 
-botSchema.pre('save', function(next) {
-  var currentDate = new Date();
-
-  this.updated_at = currentDate;
-
-  next();
-});
+botSchema.plugin(timestamps);
 
 var Bot = mongoose.model('Bot', botSchema);
 
