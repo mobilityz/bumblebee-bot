@@ -52,7 +52,7 @@ $('#add').click(function() {
   }
   drawControl.addTo(map);
 
-  
+
 
   swal.setDefaults({
     animation: false,
@@ -73,7 +73,7 @@ $('#add').click(function() {
           setTimeout(function() {
             hideSwal();
           }, 100)
-          resolve();  
+          resolve();
         })
       }
     },
@@ -95,7 +95,6 @@ $('#add').click(function() {
   ]
 
   var s = swal.queue(steps).then(function(result) {
-    console.log("test");
     swal.resetDefaults()
     swal({
       title: 'All done!',
@@ -103,7 +102,7 @@ $('#add').click(function() {
         'Your answers: <pre>' +
           JSON.stringify(result) +
         '</pre>',*/
-      imageUrl: '/images/bumblebee_transformation.gif', 
+      imageUrl: '/images/bumblebee_transformation.gif',
       background: '#333',
       confirmButtonColor: '#F8D45C',
       confirmButtonText: 'Lovely!',
@@ -113,12 +112,55 @@ $('#add').click(function() {
     swal.resetDefaults()
   })
 
-  console.log(s);
-
   map.on('draw:created', function(e) {
     featureGroup.addLayer(e.layer);
     showSwal();
+    var polygon = e.layer._latlngs;
+    var bbox = e.layer.getBounds();
+
+
+    function randomPointInBbox(bbox) {
+      return L.latLng( Math.random() * (bbox._northEast.lat - bbox._southWest.lat) + bbox._southWest.lat, Math.random() * (bbox._northEast.lng - bbox._southWest.lng) + bbox._southWest.lng)
+    }
+
+    function insidePolygon(point, polygon) {
+
+        for(var c = false, i = -1, l = polygon.length, j = l - 1; ++i < l; j = i) {
+
+            if(
+                (
+                    (polygon[i].lng <= point.lng && point.lng < polygon[j].lng) ||
+                    (polygon[j].lng <= point.lng && point.lng < polygon[i].lng)
+                ) &&
+                (
+                    point.lat < (polygon[j].lat - polygon[i].lat) *
+                    (point.lng - polygon[i].lng) /
+                    (polygon[j].lng - polygon[i].lng) +
+                    polygon[i].lat
+                )
+            ) {
+                c = !c;
+            }
+
+        }
+
+        return c;
+
+    }
+    var i = 0
+    var counter = 0
+
+    while (i < 6) {
+      var point = randomPointInBbox(bbox);
+      counter++;
+      if (insidePolygon(point,polygon)) {
+        i++;
+        L.marker(point).addTo(map);
+      }
+    }
+
   });
+
   map.on('draw:editstop', function(e) {
     //featureGroup.addLayer(e.layer);
     showSwal();
