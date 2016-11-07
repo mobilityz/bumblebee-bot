@@ -35,4 +35,14 @@ router.put('/:id', function(req, res, next) {
   });
 });
 
+router.delete('/:id', function(req, res, next) {
+  Bot.remove({ _id: req.params.id })
+  .then(function(result) {
+    res.send();
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
 module.exports = router;
