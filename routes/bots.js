@@ -27,9 +27,9 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next) {
-  Bot.update(req.params.id, req.body)
-  .then(function(res) {
-    res.sendStatus(200);
+  Bot.update({_id: req.params.id}, req.body)
+  .then(function(result) {
+    res.send();
   })
   .catch(function(err) {
     res.status(500).send(err);
