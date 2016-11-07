@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var botSchema = new Schema({
-  name: {type: String, required: true, unique : true},
+  name: {type: String, unique: true, required: true},
   zone: Array,
   nb_driver: {type: Number, default: 1},
   api_key: String,
@@ -26,5 +26,4 @@ botSchema.pre('save', function(next) {
 
 var Bot = mongoose.model('Bot', botSchema);
 
-// make this available to our users in our Node applications
 module.exports = Bot;

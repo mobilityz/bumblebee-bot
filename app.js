@@ -11,7 +11,7 @@ var bots = require('./routes/bots');
 var app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bots');
+mongoose.connect('mongodb://localhost/bumblebee');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
