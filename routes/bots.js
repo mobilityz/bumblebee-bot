@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bot = require('../models/bot');
-var trip = require('../lib/trip.js')
+var trip = require('../lib/trip')
 
 /* GET bots listing. */
 router.get('/', function(req, res, next) {
@@ -49,7 +49,7 @@ router.delete('/:id', function(req, res, next) {
 router.post('/generate_trip', function(req, res, next) {
   console.log(req.body)
   console.log(req.is('application/json'));
-  trip.generate_trip(req.body.startPoint, req.body.endPoint)
+  trip(req.body.startPoint, req.body.endPoint)
   //res.sendStatus(200);
 });
 
