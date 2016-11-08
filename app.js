@@ -10,6 +10,11 @@ var bots = require('./routes/bots');
 
 var app = express();
 
+// setup connection with MongoDB
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/bumblebee');
+mongoose.Promise = global.Promise;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

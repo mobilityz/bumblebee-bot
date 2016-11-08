@@ -1,13 +1,48 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET bots listing. */
+var Bot = require('../models/bot');
+
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  Bot.find({})
+  .then(function(bots) {
+    res.send(bots);
+  })
+  .catch(function(err) {
+    res.status(500).err(err);
+  });
 });
 
 router.post('/', function(req, res, next) {
-  res.sendStatus(200);
+  var newBot = Bot(req.body);
+
+  newBot.save()
+  .then(function(bot) {
+    res.send(bot);
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
+router.put('/:id', function(req, res, next) {
+  Bot.update({_id: req.params.id}, req.body)
+  .then(function(result) {
+    res.send();
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
+router.delete('/:id', function(req, res, next) {
+  Bot.remove({ _id: req.params.id })
+  .then(function(result) {
+    res.send();
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
 });
 
 module.exports = router;
