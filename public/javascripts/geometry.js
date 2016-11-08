@@ -1,8 +1,3 @@
-//***************************************************
-//******************* Geometry **********************
-//***************************************************
-
-
 //-- Define radius function
 if (typeof (Number.prototype.toRad) === "undefined") {
   Number.prototype.toRad = function () {
@@ -101,6 +96,26 @@ function insidePolygon(point, polygon) {
   return c;
 }
 
+function wayPoints(startPoint, endPoint) {
+
+  var baseUrl = "http://localhost:3000/bots/generate_trip";
+  var data = {"startPoint": {"lat": startPoint.lat, "lng": startPoint.lng}, "endPoint": {"lat": endPoint.lat, "lng": endPoint.lng}};
+
+  $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: baseUrl,
+    data: JSON.stringify(data),
+    dataType: 'application/json',
+    success: function(data) {
+      console.log(data);
+      return data;
+    },
+    error: function(jqXHR) {
+      console.log('error !');
+    }
+  });
+}
 
 
 

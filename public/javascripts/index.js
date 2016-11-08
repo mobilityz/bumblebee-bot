@@ -52,7 +52,7 @@ $('#add').click(function() {
   }
   drawControl.addTo(map);
 
-  
+
 
   swal.setDefaults({
     animation: false,
@@ -73,7 +73,7 @@ $('#add').click(function() {
           setTimeout(function() {
             hideSwal();
           }, 100)
-          resolve();  
+          resolve();
         })
       }
     },
@@ -95,7 +95,6 @@ $('#add').click(function() {
   ]
 
   var s = swal.queue(steps).then(function(result) {
-    console.log("test");
     swal.resetDefaults()
     swal({
       title: 'All done!',
@@ -103,7 +102,7 @@ $('#add').click(function() {
         'Your answers: <pre>' +
           JSON.stringify(result) +
         '</pre>',*/
-      imageUrl: '/images/bumblebee_transformation.gif', 
+      imageUrl: '/images/bumblebee_transformation.gif',
       background: '#333',
       confirmButtonColor: '#F8D45C',
       confirmButtonText: 'Lovely!',
@@ -113,12 +112,24 @@ $('#add').click(function() {
     swal.resetDefaults()
   })
 
-  console.log(s);
-
   map.on('draw:created', function(e) {
     featureGroup.addLayer(e.layer);
     showSwal();
+    var polygon = e.layer._latlngs;
+    var bbox = e.layer.getBounds();
+
+    var points = randomPointsInPolygon(polygon, bbox, 2);
+
+    points.forEach(function(point) {
+      L.marker(L.latLng(point.lat,point.lng)).addTo(map);
+    });
+
+
+    var stepsLatLng = wayPoints(points[0],points[1]);
+    L.polyline(stepsLatLng).addTo(map);
+
   });
+
   map.on('draw:editstop', function(e) {
     //featureGroup.addLayer(e.layer);
     showSwal();
