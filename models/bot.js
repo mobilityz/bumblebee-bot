@@ -9,6 +9,7 @@ var botSchema = new Schema({
     type: { type: String, default: 'Polygon'},
     coordinates: [[ {type: Number, required: true} ]]
   },
+  active: {type: Boolean, default: true},
   nb_driver: {type: Number, default: 1, min: 1},
   api_key: String,
   json_to_send: String,
