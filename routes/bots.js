@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var bot = require('../models/bot');
-var trip = require('../lib/trip')
+var Bot = require('../models/Bot');
 
 /* GET bots listing. */
 router.get('/', function(req, res, next) {
-  bot.find({})
+  Bot.find({})
   .then(function(bots) {
     res.send(bots);
   })
@@ -15,7 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  var newBot = bot(req.body);
+  var newBot = Bot(req.body);
 
   newBot.save()
   .then(function(bot) {
@@ -27,7 +26,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next) {
-  bot.update({_id: req.params.id}, req.body)
+  Bot.update({_id: req.params.id}, req.body)
   .then(function(result) {
     res.send();
   })
@@ -37,7 +36,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-  bot.remove({ _id: req.params.id })
+  Bot.remove({ _id: req.params.id })
   .then(function(result) {
     res.send();
   })
