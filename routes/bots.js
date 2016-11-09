@@ -45,9 +45,4 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
-router.post('/generate_trip', function(req, res, next) {
-  trip.generate_trip(req.body.startPoint, req.body.endPoint);
-  res.send();
-});
-
 module.exports = router;
