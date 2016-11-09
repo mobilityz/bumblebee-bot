@@ -11,6 +11,7 @@
   "homepage": "https://github.com/Ecotaco/bumblebee-bot#readme",
   "scripts": {
     "start": "nodemon ./bin/www",
+    "debug": "nodemon --debug ./bin/www",
     "test": "mocha --recursive"
   },
   "repository": {
