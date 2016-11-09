@@ -47,10 +47,8 @@ router.delete('/:id', function(req, res, next) {
 });
 
 router.post('/generate_trip', function(req, res, next) {
-  console.log(req.body)
-  console.log(req.is('application/json'));
-  trip(req.body.startPoint, req.body.endPoint)
-  //res.sendStatus(200);
+  trip.generate_trip(req.body.startPoint, req.body.endPoint);
+  res.send();
 });
 
 module.exports = router;
