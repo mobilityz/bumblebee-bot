@@ -3,8 +3,11 @@ var router = express.Router();
 var trip = require('../lib/trip')
 
 router.post('/', function(req, res, next) {
-  var trip_path = trip.generate_trip(req.body.startPoint, req.body.endPoint);
-  res.send(trip_path);
+	var coords = { origin: req.body.startPoint, destination: req.body.endPoint };
+  trip.generate_trip(coords, function(tripPath){
+  	res.setHeader('Content-Type', 'application/json');
+  	res.send(JSON.stringify({tripPath}), null, 2);
+  });
 });
 
 module.exports = router;

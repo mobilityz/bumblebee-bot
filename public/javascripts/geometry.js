@@ -96,9 +96,9 @@ function insidePolygon(point, polygon) {
   return c;
 }
 
-function wayPoints(startPoint, endPoint) {
+function wayPoints(startPoint, endPoint, callback) {
 
-  var baseUrl = "http://localhost:3000/bots/generate_trip";
+  var baseUrl = "http://localhost:3000/trips/";
   var data = {"startPoint": {"lat": startPoint.lat, "lng": startPoint.lng}, "endPoint": {"lat": endPoint.lat, "lng": endPoint.lng}};
 
   $.ajax({
@@ -106,12 +106,16 @@ function wayPoints(startPoint, endPoint) {
     contentType: "application/json",
     url: baseUrl,
     data: JSON.stringify(data),
-    dataType: 'application/json',
-    success: function(data) {
-      console.log(data);
-      return data;
+    dataType: 'json',
+    success: function(qq) {
+      console.log(qq);
+      callback(qq);
+      return true;
     },
-    error: function(jqXHR) {
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR);
+      console.log(textStatus);
+      console.log(errorThrown);
       console.log('error !');
     }
   });
