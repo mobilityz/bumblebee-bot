@@ -95,7 +95,7 @@ $('#add').click(function() {
         return new Promise(function(resolve) {
           resolve({
             name: $('#bot_name').val(),
-            nbDriver: $('#nb_driver').val(),
+            nbDriver: parseInt($('#nb_driver').val()),
             zone: polygon,
           })
         })
@@ -169,11 +169,13 @@ function createBot(result) {
         confirmButtonText: 'Lovely!',
         showCancelButton: false
       })
-      console.log(qq);
       return true;
     },
     error: function(jqXHR, textStatus, errorThrown) {
       swal.resetDefaults()
+      console.log(jqXHR);
+      console.log(textStatus);
+      console.log(errorThrown);
       swal({
         title: 'Error!',
         html:
@@ -197,14 +199,15 @@ function createBot(result) {
 
 
 
-  console.log(result_form);
+  /*console.log(result_form);
+  console.log(result_form.nbDriver);
 
-  var start_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nb_driver);
-  var end_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nb_driver);
+  var start_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nbDriver);
+  var end_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nbDriver);
   
   var i = 0;
 
-  while (i < result_form.nb_driver) {
+  while (i < result_form.nbDriver) {
     var driver = {
       startPoint: {lat: start_points[i].lat, lng:start_points[i].lng},
       endPoint: {lat: end_points[i].lat, lng:end_points[i].lng},
@@ -242,6 +245,6 @@ function createBot(result) {
       var polyline = L.polyline(line_points, polyline_options).addTo(map);
     });
   });
-
+  */
    
 }
