@@ -6,8 +6,6 @@ var map = L.map('map', options).setView([50.632854, 3.021342], 11);
 var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d3pugthb', options).addTo(map);
 var featureGroup = L.featureGroup().addTo(map);
 var polygon = null;
-var polygonGeojson = null;
-var bbox = null;
 var drivers = [];
 var drawControl = new L.Control.Draw({
   edit: {
@@ -98,7 +96,7 @@ $('#add').click(function() {
           resolve({
             name: $('#bot_name').val(),
             nbDriver: $('#nb_driver').val(),
-            zone: polygonGeojson,
+            zone: polygon,
           })
         })
       }
@@ -115,9 +113,8 @@ $('#add').click(function() {
   map.on('draw:created', function(e) {
     featureGroup.addLayer(e.layer);
     showSwal();
-    polygon = e.layer._latlngs;
-    polygonGeojson = e.layer.toGeoJSON().geometry; 
-    bbox = e.layer.getBounds();
+    polygon = e.layer.toGeoJSON().geometry;
+    polygon.properties = {bbox: e.layer.getBounds(), latLngs: e.layer._latlngs};
   });
 
   map.on('draw:editstop', function(e) {
@@ -125,18 +122,6 @@ $('#add').click(function() {
     showSwal();
   });
 
-});
-
-$('#newBotForm').submit(function(e) {
-  e.preventDefault();
-  $.ajax({
-      url: $(e.currentTarget).attr('action'),
-      type: $(e.currentTarget).attr('method'),
-      data: $(e.currentTarget).serialize(),
-      success: function(html) {
-        alert(html);
-      }
-  });
 });
 
 $('#list').click(function() {
@@ -188,10 +173,18 @@ function createBot(result) {
       return true;
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR);
-      console.log(textStatus);
-      console.log(errorThrown);
-      console.log('error !');
+      swal.resetDefaults()
+      swal({
+        title: 'Error!',
+        html:
+          'Your answers: <pre>' +
+            jqXHR.responseJSON.errmsg +
+          '</pre>',
+        background: '#333',
+        confirmButtonColor: '#F8D45C',
+        confirmButtonText: 'retry!',
+        showCancelButton: false
+      })
     }
   });
 
@@ -206,8 +199,8 @@ function createBot(result) {
 
   console.log(result_form);
 
-  var start_points = randomPointsInPolygon(polygon, bbox, result_form.nb_driver);
-  var end_points = randomPointsInPolygon(polygon, bbox, result_form.nb_driver);
+  var start_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nb_driver);
+  var end_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nb_driver);
   
   var i = 0;
 

@@ -7,7 +7,8 @@ var botSchema = new Schema({
   name: {type: String, unique: true, required: true},
   zone: {
     type: { type: String, default: 'Polygon'},
-    coordinates: {type: Array, required: true}
+    coordinates: {type: Array, required: true},
+    properties: {type: Object}
   },
   active: {type: Boolean, default: true},
   nb_driver: {type: Number, default: 1, min: 1},
@@ -20,7 +21,7 @@ var botSchema = new Schema({
   precision: {type: Number, default: 20, min: 1}
 });
 
-botSchema.index({ location : '2dsphere' });
+botSchema.index({ zone : '2dsphere' });
 
 botSchema.plugin(timestamps);
 
