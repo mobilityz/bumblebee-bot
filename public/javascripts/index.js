@@ -6,6 +6,7 @@ var map = L.map('map', options).setView([50.632854, 3.021342], 11);
 var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d3pugthb', options).addTo(map);
 var featureGroup = L.featureGroup().addTo(map);
 var polygon = null;
+var polygonGeojson = null;
 var bbox = null;
 var drivers = [];
 var drawControl = new L.Control.Draw({
@@ -94,10 +95,11 @@ $('#add').click(function() {
       showCancelButton: true,
       preConfirm: function() {
         return new Promise(function(resolve) {
-          resolve([
-            $('#bot_name').val(),
-            $('#nb_driver').val()
-          ])
+          resolve({
+            name: $('#bot_name').val(),
+            nbDriver: $('#nb_driver').val(),
+            zone: polygonGeojson,
+          })
         })
       }
     },
@@ -114,6 +116,7 @@ $('#add').click(function() {
     featureGroup.addLayer(e.layer);
     showSwal();
     polygon = e.layer._latlngs;
+    polygonGeojson = e.layer.toGeoJSON().geometry; 
     bbox = e.layer.getBounds();
   });
 
@@ -155,29 +158,60 @@ var showSwal = function() {
 
 function createBot(result) {
 
-  swal.resetDefaults()
-  swal({
-    title: 'All done!',
-    html:
-      'Your answers: <pre>' +
-        JSON.stringify(result) +
-      '</pre>',
-    imageUrl: '/images/bumblebee_transformation.gif',
-    background: '#333',
-    confirmButtonColor: '#F8D45C',
-    confirmButtonText: 'Lovely!',
-    showCancelButton: false
-  })
-
   result_form = result[2];
+
+
+
+  var baseUrl = "/bots/";
+
+  $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: baseUrl,
+    data: JSON.stringify(result[2]),
+    dataType: 'json',
+    success: function(qq) {
+      swal.resetDefaults()
+      swal({
+        title: 'All done!',
+        html:
+          'Your answers: <pre>' +
+            JSON.stringify(result) +
+          '</pre>',
+        imageUrl: '/images/bumblebee_transformation.gif',
+        background: '#333',
+        confirmButtonColor: '#F8D45C',
+        confirmButtonText: 'Lovely!',
+        showCancelButton: false
+      })
+      console.log(qq);
+      return true;
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR);
+      console.log(textStatus);
+      console.log(errorThrown);
+      console.log('error !');
+    }
+  });
+
+
+
+
+
+
+
+
+
+
   console.log(result_form);
 
-  var start_points = randomPointsInPolygon(polygon, bbox, result_form[1]);
-  var end_points = randomPointsInPolygon(polygon, bbox, result_form[1]);
+  var start_points = randomPointsInPolygon(polygon, bbox, result_form.nb_driver);
+  var end_points = randomPointsInPolygon(polygon, bbox, result_form.nb_driver);
   
   var i = 0;
 
-  while (i < result_form[1]) {
+  while (i < result_form.nb_driver) {
     var driver = {
       startPoint: {lat: start_points[i].lat, lng:start_points[i].lng},
       endPoint: {lat: end_points[i].lat, lng:end_points[i].lng},
@@ -206,7 +240,7 @@ function createBot(result) {
           // Making a lissajous curve just for fun.
           // Create your own animated path here.
           marker.setLatLng(L.latLng(step.lat, step.lng));
-        }, 500);
+        }, 1000);
       });
       driver.tripSteps = line_points;
       var polyline_options = {
