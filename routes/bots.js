@@ -49,4 +49,27 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
+router.post('/:id/deactivate', function(req, res, next) {
+  Bot.update({_id: req.params.id}, {active: false})
+  .then(function(result) {
+    res.send();
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
+router.post('/:id/active', function(req, res, next) {
+  Bot.findByIdAndUpdate({_id: req.params.id}, {active: true})
+  .then(function(bot) {
+    bot.drivers.forEach(function(id_driver) {
+      job.driver_new_trip(id_driver);
+    });
+    res.send();
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+});
+
 module.exports = router;
