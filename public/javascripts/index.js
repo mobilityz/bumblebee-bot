@@ -7,6 +7,7 @@ var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d
 var featureGroup = L.featureGroup().addTo(map);
 var polygon = null;
 var drivers = [];
+var socket = io('http://localhost:3000');
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: featureGroup,
@@ -225,8 +226,11 @@ function createBot(result) {
   });
 
 
+socket.on('notification', function (data) {
+  L.marker(L.latLng(data.position.lat, data.position.lng)).addTo(map);
+});
   /*
-  var marker = L.marker(L.latLng(driver.startPoint.lat, driver.startPoint.lng)).addTo(map);
+  
   marker.setLatLng(L.latLng(step.lat, step.lng));
 
   var polyline_options = {
