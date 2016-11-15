@@ -12,6 +12,7 @@ var botSchema = new Schema({
   },
   active: {type: Boolean, default: true},
   nb_driver: {type: Number, default: 1, min: 1},
+  drivers: [{ type: Schema.ObjectId }],
   api_key: String,
   json_to_send: String,
   header_to_send: String,
@@ -24,6 +25,18 @@ var botSchema = new Schema({
 botSchema.index({ zone : '2dsphere' });
 
 botSchema.plugin(timestamps);
+
+botSchema.pre('save', function(next) {
+  if (this.isNew) {
+    var drivers = [];
+    for(var i = 0; i < this.nb_driver; i++) {
+      var id_driver = mongoose.Types.ObjectId();
+      drivers.push(id_driver);
+    }
+    this.drivers = drivers;
+  }
+  next();
+});
 
 var Bot = mongoose.model('Bot', botSchema);
 
