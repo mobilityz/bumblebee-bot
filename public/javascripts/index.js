@@ -143,10 +143,6 @@ var showSwal = function() {
 
 function createBot(result) {
 
-  result_form = result[2];
-
-
-
   var baseUrl = "/bots/";
 
   $.ajax({
@@ -197,54 +193,21 @@ function createBot(result) {
 
 
 
-
-
-  /*console.log(result_form);
-  console.log(result_form.nbDriver);
-
-  var start_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nbDriver);
-  var end_points = randomPointsInPolygon(polygon.properties.latLngs, polygon.properties.bbox, result_form.nbDriver);
+  /*
+  var marker = L.marker(L.latLng(driver.startPoint.lat, driver.startPoint.lng)).addTo(map);
+  marker.setLatLng(L.latLng(step.lat, step.lng));
   
-  var i = 0;
+  var polyline_options = {
+    color: '#F8D45C'
+  };
+  var polyline = L.polyline(line_points, polyline_options).addTo(map);
 
-  while (i < result_form.nbDriver) {
-    var driver = {
-      startPoint: {lat: start_points[i].lat, lng:start_points[i].lng},
-      endPoint: {lat: end_points[i].lat, lng:end_points[i].lng},
-      tripSteps: [],
-      currentStep: {index: 0, position: {lat: start_points[i].lat, lng:start_points[i].lng}}
-    };
-    drivers.push(driver);
-    
-    i++;
-  }
-
-  console.log(drivers);
-
-  var markers = [];
-
-  drivers.forEach(function(driver) {
-    wayPoints(driver.startPoint, driver.endPoint, function(stepsLatLng) {  
-
-      var marker = L.marker(L.latLng(driver.startPoint.lat, driver.startPoint.lng)).addTo(map);
-      markers.push(marker);
-
-      var line_points = []
-      stepsLatLng.tripPath.forEach(function(step) {
-        line_points.push([step.lat, step.lng]);
-        window.setTimeout(function() {
-          // Making a lissajous curve just for fun.
-          // Create your own animated path here.
-          marker.setLatLng(L.latLng(step.lat, step.lng));
-        }, 1000);
-      });
-      driver.tripSteps = line_points;
-      var polyline_options = {
-        color: '#F8D45C'
-      };
-      var polyline = L.polyline(line_points, polyline_options).addTo(map);
-    });
-  });
+  var driver = {
+    startPoint: {lat: start_points[i].lat, lng:start_points[i].lng},
+    endPoint: {lat: end_points[i].lat, lng:end_points[i].lng},
+    tripSteps: [],
+    currentStep: {index: 0, position: {lat: start_points[i].lat, lng:start_points[i].lng}}
+  };
   */
    
 }
