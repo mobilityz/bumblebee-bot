@@ -99,7 +99,8 @@ a {
   color: #333; }
 
 #list-bots th {
-  text-align: center; }
+  text-align: center;
+  padding: 10px; }
 
 #main .masthead {
   z-index: 9;

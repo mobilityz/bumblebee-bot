@@ -147,7 +147,7 @@ $('#list').click(function() {
   swal({
     animation: false,
     customClass: 'animated bounceInLeft',
-    width: '50%',
+    width: '45%',
     background: '#333',
     confirmButtonColor: '#F8D45C',
     title: 'List of bots',
