@@ -227,7 +227,19 @@ function createBot(result) {
 
 
 socket.on('notification', function (data) {
-  L.marker(L.latLng(data.position.lat, data.position.lng)).addTo(map);
+  function byID(element) {
+    return element.id === this.id;
+  }
+  if (drivers.find(byID, data) !== undefined ) {
+    var driver = drivers.find(byID, data)
+    driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
+  }
+  else {
+    var marker = L.marker(L.latLng(data.position.lat, data.position.lng)).addTo(map);
+    var driver = {id: data.id, marker: marker}
+    drivers.push(driver)
+  }
+  
 });
   /*
   
