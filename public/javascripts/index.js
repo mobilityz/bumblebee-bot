@@ -31,21 +31,6 @@ var drawControl = new L.Control.Draw({
   }
 });
 
-// Display bots polygon
-$.ajax({
-  url : 'http://localhost:3000/bots',
-  success : function(data){
-    data.forEach(function(bot){
-      var points = bot.zone.coordinates[0];
-      var polygon = [];
-      points.forEach(function(point){
-        polygon.push({lat: point[1], lng: point[0]});
-      });
-      L.polygon(polygon).addTo(map);
-    })
-  }
-});
-
 $('#load-close').click(function(){
   $('#load').addClass('animated slideOutUp');
   map.addControl(L.control.zoom({position: 'topright'}));
@@ -110,7 +95,7 @@ $('#add').click(function() {
         return new Promise(function(resolve) {
           resolve({
             name: $('#bot_name').val(),
-            nbDriver: parseInt($('#nb_driver').val()),
+            nb_driver: parseInt($('#nb_driver').val()),
             zone: polygon,
           })
         })
@@ -147,7 +132,7 @@ $('#list').click(function() {
   swal({
     animation: false,
     customClass: 'animated bounceInLeft',
-    width: '45%',
+    width: 'auto',
     background: '#333',
     confirmButtonColor: '#F8D45C',
     title: 'List of bots',
@@ -167,11 +152,19 @@ $('#list').click(function() {
           bot.precision + "</td><td>" +
           bot.speed + "</td><td>" +
           bot._id + "</td>" + "<td><input type='checkbox' name='show' checked></td></tr>"
+        // Display bots polygons
+        var points = bot.zone.coordinates[0];
+        var polygon = [];
+        points.forEach(function(point){
+          polygon.push({lat: point[1], lng: point[0]});
+        });
+        L.polygon(polygon).addTo(map);
       })
       $('#list-bots tbody').html(html);
+
     }
   });
-  $("[name='show']").bootstrapSwitch();
+
 
 });
 
