@@ -159,7 +159,7 @@ $('#list').click(function() {
         points.forEach(function(point){
           polygon.push({lat: point[1], lng: point[0]});
         });
-        L.polygon(polygon).addTo(map);
+        L.polygon(polygon, {color: '#F8D45C'}).addTo(map);
       })
       $('#list-bots tbody').html(html);
 
