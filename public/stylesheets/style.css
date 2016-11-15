@@ -98,6 +98,10 @@ a {
 .swal2-modal input[placeholder], .swal2-modal [placeholder], .swal2-modal *[placeholder] {
   color: #333; }
 
+#list-bots th {
+  text-align: center;
+  padding: 10px; }
+
 #main .masthead {
   z-index: 9;
   left: 25%;

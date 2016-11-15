@@ -31,6 +31,21 @@ var drawControl = new L.Control.Draw({
   }
 });
 
+// Display bots polygon
+$.ajax({
+  url : 'http://localhost:3000/bots',
+  success : function(data){
+    data.forEach(function(bot){
+      var points = bot.zone.coordinates[0];
+      var polygon = [];
+      points.forEach(function(point){
+        polygon.push({lat: point[1], lng: point[0]});
+      });
+      L.polygon(polygon).addTo(map);
+    })
+  }
+});
+
 $('#load-close').click(function(){
   $('#load').addClass('animated slideOutUp');
   map.addControl(L.control.zoom({position: 'topright'}));
@@ -128,6 +143,36 @@ $('#list').click(function() {
   if ($('.leaflet-draw').is(':visible')) {
     drawControl.removeFrom(map);
   }
+
+  swal({
+    animation: false,
+    customClass: 'animated bounceInLeft',
+    width: '45%',
+    background: '#333',
+    confirmButtonColor: '#F8D45C',
+    title: 'List of bots',
+    html: "<div id='list-bots'><table><thead><tr>" +
+     "<th>Bot</th><th>Drivers</th><th>Accuracy</th><th>Speed</th><th>ID</th><th>Action</th>" +
+     "</thead></tr><tbody></tbody></table></div>"
+  })
+
+  $.ajax({
+    url : 'http://localhost:3000/bots',
+    success : function(data){
+      var html = "";
+      data.forEach(function(bot){
+        console.log(bot);
+        html += "<tr><td>" + bot.name + "</td><td>" +
+          bot.nb_driver + "</td><td>" +
+          bot.precision + "</td><td>" +
+          bot.speed + "</td><td>" +
+          bot._id + "</td>" + "<td><input type='checkbox' name='show' checked></td></tr>"
+      })
+      $('#list-bots tbody').html(html);
+    }
+  });
+  $("[name='show']").bootstrapSwitch();
+
 });
 
 var hideSwal = function() {
@@ -187,16 +232,10 @@ function createBot(result) {
   });
 
 
-
-
-
-
-
-
   /*
   var marker = L.marker(L.latLng(driver.startPoint.lat, driver.startPoint.lng)).addTo(map);
   marker.setLatLng(L.latLng(step.lat, step.lng));
-  
+
   var polyline_options = {
     color: '#F8D45C'
   };
@@ -209,5 +248,5 @@ function createBot(result) {
     currentStep: {index: 0, position: {lat: start_points[i].lat, lng:start_points[i].lng}}
   };
   */
-   
+
 }
