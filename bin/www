@@ -5,6 +5,7 @@
  */
 
 var app = require('../app');
+var io = require('../lib/socket');
 var debug = require('debug')('bumblebee-bot:server');
 var http = require('http');
 
@@ -21,6 +22,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+io.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.
