@@ -32,6 +32,12 @@ var drawControl = new L.Control.Draw({
   }
 });
 
+$('#fullscreen').click(function() {
+  if (screenfull.enabled) {
+    screenfull.request();
+  }
+});
+
 $('#load-close').click(function(){
   $('#load').addClass('animated slideOutUp');
   map.addControl(L.control.zoom({position: 'topright'}));
@@ -224,8 +230,10 @@ function createBot(result) {
       })
     }
   });
-
-
+var LeafIcon = L.Icon.extend({options: {
+  iconSize: [38, 95]
+}});
+carIcon = new LeafIcon({iconUrl: '/images/car-icon.svg'}),
 socket.on('notification', function (data) {
   function byID(element) {
     return element.id === this.id;
@@ -235,7 +243,7 @@ socket.on('notification', function (data) {
     driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
   }
   else {
-    var marker = L.marker(L.latLng(data.position.lat, data.position.lng)).addTo(map);
+    var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
     var driver = {id: data.id, marker: marker}
     drivers.push(driver)
   }
