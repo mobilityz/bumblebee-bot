@@ -78,6 +78,8 @@ a {
   bottom: 0;
   width: 100%;
   background-color: #111; }
+  #map .leaflet-draw {
+    display: none; }
 
 .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep, .swal2-progresssteps .swal2-progresscircle, .swal2-progresssteps .swal2-progressline {
   background: #F8D45C;

@@ -79,6 +79,7 @@ $('#add').click(function() {
         return new Promise(function(resolve) {
           setTimeout(function() {
             hideSwal();
+            $('.leaflet-draw-draw-polygon')[0].click();
           }, 100)
           resolve();
         })
