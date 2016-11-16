@@ -173,6 +173,7 @@ $('#list').click(function() {
     }
   });
 
+  animate_drivers();
 
 });
 
@@ -231,25 +232,8 @@ function createBot(result) {
       })
     }
   });
-var LeafIcon = L.Icon.extend({options: {
-  iconSize: [38, 95]
-}});
-carIcon = new LeafIcon({iconUrl: '/images/car-icon.svg'}),
-socket.on('notification', function (data) {
-  function byID(element) {
-    return element.id === this.id;
-  }
-  if (drivers.find(byID, data) !== undefined ) {
-    var driver = drivers.find(byID, data)
-    driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
-  }
-  else {
-    var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
-    var driver = {id: data.id, marker: marker}
-    drivers.push(driver)
-  }
 
-});
+  animate_drivers();
   /*
 
   marker.setLatLng(L.latLng(step.lat, step.lng));
@@ -267,4 +251,27 @@ socket.on('notification', function (data) {
   };
   */
 
+}
+function animate_drivers() {
+  var LeafIcon = L.Icon.extend({options: {
+    iconSize: [38, 95]
+  }});
+
+  carIcon = new LeafIcon({iconUrl: '/images/car-icon.svg'});
+
+  socket.on('notification', function (data) {
+    console.log(data);
+    function byID(element) {
+      return element.id === this.id;
+    }
+    if (drivers.find(byID, data) !== undefined ) {
+      var driver = drivers.find(byID, data)
+      driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
+    }
+    else {
+      var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
+      var driver = {id: data.id, marker: marker}
+      drivers.push(driver)
+    }
+  });
 }
