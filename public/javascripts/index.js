@@ -154,7 +154,6 @@ $('#list').click(function() {
     success : function(data){
       var html = "";
       data.forEach(function(bot){
-        console.log(bot);
         html += "<tr><td>" + bot.name + "</td><td>" +
           bot.nb_driver + "</td><td>" +
           bot.precision + "</td><td>" +
