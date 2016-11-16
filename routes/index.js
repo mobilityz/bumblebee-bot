@@ -19,7 +19,7 @@ router.post('/destroy_jobs', function(req, res, next) {
 });
 
 router.post('/destroy_all_the_things', function(req, res, next) {
-  var deleteJob = function(state) {
+  ['Queued', 'Active', 'Failed', 'Complete', 'Delayed'].forEach(function(state) {
     kue.Job.rangeByState(state, 0, 999999, 'asc', function( err, jobs ) {
       jobs.forEach(function(job) {
         job.remove(function(err) {
@@ -27,9 +27,8 @@ router.post('/destroy_all_the_things', function(req, res, next) {
         });
       });
     });
-  }
-  deleteJob('complete');
-  deleteJob('delayed');
+  });
+
   Bot.remove({})
   .then(function(result) {
   })
