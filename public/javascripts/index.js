@@ -234,7 +234,7 @@ function createBot(result) {
 var LeafIcon = L.Icon.extend({options: {
   iconSize: [38, 95]
 }});
-carIcon = new LeafIcon({iconUrl: '/images/car.svg'}),
+carIcon = new LeafIcon({iconUrl: '/images/car-icon.svg'}),
 socket.on('notification', function (data) {
   function byID(element) {
     return element.id === this.id;
@@ -248,10 +248,10 @@ socket.on('notification', function (data) {
     var driver = {id: data.id, marker: marker}
     drivers.push(driver)
   }
-  
+
 });
   /*
-  
+
   marker.setLatLng(L.latLng(step.lat, step.lng));
 
   var polyline_options = {
