@@ -32,6 +32,12 @@ var drawControl = new L.Control.Draw({
   }
 });
 
+$('#fullscreen').click(function() {
+  if (screenfull.enabled) {
+    screenfull.request();
+  }
+});
+
 $('#load-close').click(function(){
   $('#load').addClass('animated slideOutUp');
   map.addControl(L.control.zoom({position: 'topright'}));
