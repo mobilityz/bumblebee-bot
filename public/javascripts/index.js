@@ -233,7 +233,7 @@ function createBot(result) {
 var LeafIcon = L.Icon.extend({options: {
   iconSize: [38, 95]
 }});
-carIcon = new LeafIcon({iconUrl: '/images/car-icon.svg'}),
+carIcon = new LeafIcon({iconUrl: '/images/car.svg'}),
 socket.on('notification', function (data) {
   function byID(element) {
     return element.id === this.id;
