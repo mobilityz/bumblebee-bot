@@ -1,5 +1,6 @@
 var express = require('express');
 var kue = require('kue');
+var Bot = require('../models/bot');
 
 var router = express.Router();
 
@@ -15,6 +16,26 @@ router.post('/destroy_jobs', function(req, res, next) {
     });
     res.send();
   });
+});
+
+router.post('/destroy_all_the_things', function(req, res, next) {
+  kue.Job.rangeByState('delayed', 0, 10000, 'asc', function( err, jobs ) {
+    jobs.forEach(function(job) {
+      job.remove()
+      .then(function(res) {
+      })
+      .catch(function(err) {
+        res.status(500).send(err);
+      });
+    });
+  });
+  Bot.remove({})
+  .then(function(result) {
+  })
+  .catch(function(err) {
+    res.status(500).send(err);
+  });
+  res.send();
 });
 
 module.exports = router;
