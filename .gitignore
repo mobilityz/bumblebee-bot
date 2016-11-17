@@ -38,3 +38,6 @@ jspm_packages
 
 .env
 .DS_Store
+
+# Reddis persistance
+dump.rdb
