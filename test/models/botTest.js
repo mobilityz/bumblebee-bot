@@ -5,8 +5,8 @@ var expect = chai.expect;
 
 var Bot = require('./../../models/bot');
 
-describe('Bot()', function() {
-  it('Create new bot object with default values', function() {
+describe('Bot()', () => {
+  it('Create new bot object with default values', () => {
     var newBot = Bot({
       name: 'Toto',
       zone: {
@@ -30,8 +30,8 @@ describe('Bot()', function() {
 });
 
 // Doesn't curently works, fulfilled or rejected are always true ...
-describe('Bot save()', function() {
-  it('Is good', function() {
+describe('Bot save()', () => {
+  it('Is good', () => {
     var new_bot = Bot({
       name: 'Toto',
       zone: {
@@ -44,7 +44,7 @@ describe('Bot save()', function() {
     expect(bot_save).to.eventually.be.equal({test: 5});
   });
 
-  it('Should require name', function() {
+  it('Should require name', () => {
     var new_bot = Bot({
       zone: {
         coordinates: [[8.086, 3.455], [7.546, 5.558]]
@@ -55,7 +55,7 @@ describe('Bot save()', function() {
     expect(bot_save).to.be.rejected;
   });
 
-  it('Should require coordinates', function() {
+  it('Should require coordinates', () => {
     var new_bot = Bot({
       name: 'Toto1'
     });
@@ -64,7 +64,7 @@ describe('Bot save()', function() {
     expect(bot_save).to.be.rejected;
   });
 
-  it('Attributes name has to be unique', function() {
+  it('Attributes name has to be unique', () => {
     var new_bot = Bot({
       name: 'Toto',
       zone: {

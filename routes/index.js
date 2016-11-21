@@ -5,24 +5,24 @@ var Bot = require('../models/bot');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('index');
 });
 
-router.post('/destroy_jobs', function(req, res, next) {
-  kue.Job.rangeByState('delayed', 0, 10000, 'asc', function( err, jobs ) {
-    jobs.forEach(function(job) {
-      job.remove(function() {});
+router.post('/destroy_jobs', (req, res, next) => {
+  kue.Job.rangeByState('delayed', 0, 10000, 'asc', (err, jobs) => {
+    jobs.forEach((job) => {
+      job.remove(() => {});
     });
     res.send();
   });
 });
 
-router.post('/destroy_all_the_things', function(req, res, next) {
-  ['Queued', 'Active', 'Failed', 'Complete', 'Delayed'].forEach(function(state) {
-    kue.Job.rangeByState(state, 0, 999999, 'asc', function( err, jobs ) {
-      jobs.forEach(function(job) {
-        job.remove(function(err) {
+router.post('/destroy_all_the_things', (req, res, next) => {
+  ['Queued', 'Active', 'Failed', 'Complete', 'Delayed'].forEach((state) => {
+    kue.Job.rangeByState(state, 0, 999999, 'asc', (err, jobs) => {
+      jobs.forEach((job) => {
+        job.remove((err) => {
           if (err) console.log(err);
         });
       });
@@ -30,9 +30,9 @@ router.post('/destroy_all_the_things', function(req, res, next) {
   });
 
   Bot.remove({})
-  .then(function(result) {
+  .then((result) => {
   })
-  .catch(function(err) {
+  .catch((err) => {
     res.status(500).send(err);
   });
   res.send();

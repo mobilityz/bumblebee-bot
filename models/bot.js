@@ -38,7 +38,7 @@ botSchema.index({ zone : '2dsphere' });
 
 botSchema.plugin(timestamps);
 
-botSchema.pre('save', function(next) {
+botSchema.pre('save', (next) => {
   if (this.isNew) {
     var drivers = [];
     for(var i = 0; i < this.nb_driver; i++) {
