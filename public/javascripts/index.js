@@ -44,17 +44,6 @@ $('#load-close').click(function(){
   map.addControl(L.control.attribution({position: 'bottomright'}));
 });
 
-$('li').click(function() {
-  $("li.active").removeClass("active");
-  $(this).addClass('active');
-});
-
-$('#home').click(function() {
-  if ($('.leaflet-draw').is(':visible')) {
-    drawControl.removeFrom(map);
-  }
-});
-
 $('#add').click(function() {
   if ($('.leaflet-draw').is(':visible')) {
     drawControl.removeFrom(map);
