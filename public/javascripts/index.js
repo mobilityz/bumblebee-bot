@@ -52,14 +52,15 @@ $('#add').click(function() {
 
   swal.setDefaults({
     animation: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
     customClass: 'animated bounceInLeft',
-    progressSteps: ['1', '2', '3'],
+    progressSteps: ['1', '2'],
     background: '#333',
     confirmButtonColor: '#F8D45C'
   })
 
-  var steps = [
-    {
+  var steps = [{
       title: 'Draw the area',
       text: 'Draw the area where the vehicles will be generated.',
       confirmButtonText: 'Draw &rarr;',
@@ -73,15 +74,7 @@ $('#add').click(function() {
           resolve();
         })
       }
-    },
-    {
-      title: 'Confirm this area',
-      text: 'Do you confirm this area ?',
-      confirmButtonText: 'Yes &rarr;',
-      showCancelButton: true,
-      cancelButtonText: 'Modify',
-    },
-    {
+    }, {
       title: 'Generate the bot',
       html:
         '<input id="bot_name" name="bot_name" class="swal2-input" autofocus placeholder="Bot name" required />' +
@@ -97,7 +90,7 @@ $('#add').click(function() {
           })
         })
       }
-    },
+    }
   ]
 
   var s = swal.queue(steps).then(
