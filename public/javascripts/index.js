@@ -263,28 +263,19 @@ function animate_drivers() {
   carIcon = new LeafIcon({iconUrl: '/images/car.svg'});
 
   socket.on('notification', function (data) {
-    //console.log(data);
     function byID(element) {
       return element.id === this.id;
     }
     if (drivers.find(byID, data) !== undefined ) {
       var driver = drivers.find(byID, data)
-      var lat1 = driver.marker.getLatLng().lat;
-      var lng1 = driver.marker.getLatLng().lng;
-      var lat2 = data.position.lat;
-      var lng2 = data.position.lng;
-      var y = Math.sin(lng2-lng1) * Math.cos(lat2);
-      var x = Math.cos(lat1)*Math.sin(lat2) -Math.sin(lat1)*Math.cos(lat2)*Math.cos(lng2-lng1);
-      var brng = Math.atan2(y, x) * (180/Math.PI);
-      console.log(brng);
       var oldBrng = driver.marker._icon.style.transform.split("rotate(")[1];
 
       driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
 
-      if (brng == 0) {
+      if (data.brng == 0) {
         driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + oldBrng;
       } else {
-        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + brng + "deg)";
+        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + data.brng + "deg)";
       }
     } else {
       var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
@@ -299,8 +290,7 @@ function display_trips() {
     line_points = []
     data.ride.forEach(function(step){
       line_points.push(L.latLng(step.lat, step.lng))
-    })
-    console.log(data);
+    });
     var polyline_options = {
       color: '#F8D45C',
       opacity: 0.5
