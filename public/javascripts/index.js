@@ -275,7 +275,7 @@ function animate_drivers() {
       if (data.brng == 0) {
         driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + oldBrng;
       } else {
-        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + data.brng + "deg)";
+        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + data.position.brng + "deg)";
       }
     } else {
       var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
