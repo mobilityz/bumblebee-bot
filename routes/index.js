@@ -9,18 +9,9 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.post('/destroy_jobs', function(req, res, next) {
-  kue.Job.rangeByState('delayed', 0, 10000, 'asc', function( err, jobs ) {
-    jobs.forEach(function(job) {
-      job.remove(function() {});
-    });
-    res.send();
-  });
-});
-
 router.post('/destroy_all_the_things', function(req, res, next) {
-  ['Queued', 'Active', 'Failed', 'Complete', 'Delayed'].forEach(function(state) {
-    kue.Job.rangeByState(state, 0, 999999, 'asc', function( err, jobs ) {
+  ['queued', 'active', 'failed', 'complete', 'delayed'].forEach(function(state) {
+    kue.Job.rangeByState(state, 0, 10000, 'asc', function(err, jobs) {
       jobs.forEach(function(job) {
         job.remove(function(err) {
           if (err) console.log(err);
