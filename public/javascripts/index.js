@@ -267,7 +267,6 @@ function animate_drivers() {
     }
     if (drivers.find(byID, data) !== undefined ) {
       var driver = drivers.find(byID, data)
-<<<<<<< HEAD
       var oldBrng = driver.marker._icon.style.transform.split("rotate(")[1];
 
       driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
