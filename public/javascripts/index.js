@@ -1,4 +1,4 @@
-var mapboxKey = "pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJjaXYwMG1vN3cwMDNqMm5yMXdmMnRma3NpIn0.2C4J5O3_Lc_mXBZSZ8MNBA";
+var mapboxKey = 'pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJjaXYwMG1vN3cwMDNqMm5yMXdmMnRma3NpIn0.2C4J5O3_Lc_mXBZSZ8MNBA';
 L.mapbox.accessToken = mapboxKey;
 var options = {zoomControl: false, attributionControl: false,
         unloadInvisibleTiles: true, detectRetina: true}
@@ -126,21 +126,23 @@ $('#list').click(function() {
     background: '#333',
     confirmButtonColor: '#F8D45C',
     title: 'List of bots',
-    html: "<div id='list-bots'><table><thead><tr>" +
-     "<th>Bot</th><th>Drivers</th><th>Accuracy</th><th>Speed</th><th>ID</th><th>Action</th>" +
-     "</thead></tr><tbody></tbody></table></div>"
+    html: '<div id="list-bots"><table><thead><tr>' +
+     '<th>Bot</th><th>Drivers</th><th>Accuracy</th><th>Speed</th><th>ID</th><th>Actions</th>' +
+     '</thead></tr><tbody></tbody></table></div>'
   })
 
   $.ajax({
     url : 'http://localhost:3000/bots',
     success : function(data){
-      var html = "";
+      var html = '';
       data.forEach(function(bot){
-        html += "<tr><td>" + bot.name + "</td><td>" +
-          bot.nb_driver + "</td><td>" +
-          bot.precision + "</td><td>" +
-          bot.speed + "</td><td>" +
-          bot._id + "</td>" + "<td><input type='checkbox' name='show' checked></td></tr>"
+        html += '<tr><td>' + bot.name + '</td><td>'
+          + bot.nb_driver + '</td><td>'
+          + bot.precision + '</td><td>'
+          + bot.speed + '</td><td>'
+          + bot._id + '</td>' + '<td>'
+          + '<button onclick="delete_bot('+ bot.id + ')">Delete</button>'
+          + '</td></tr>'
         // Display bots polygons
         var points = bot.zone.coordinates[0];
         var polygon = [];
@@ -150,7 +152,6 @@ $('#list').click(function() {
         L.polygon(polygon, {color: '#F8D45C'}).addTo(map);
       })
       $('#list-bots tbody').html(html);
-
     }
   });
 
@@ -172,12 +173,10 @@ var showSwal = function() {
 }
 
 function createBot(result) {
-
-  var baseUrl = "/bots/";
-
+  var baseUrl = '/bots/';
   $.ajax({
-    type: "POST",
-    contentType: "application/json",
+    type: 'POST',
+    contentType: 'application/json',
     url: baseUrl,
     data: JSON.stringify(result[1]),
     dataType: 'json',
@@ -259,14 +258,14 @@ function animate_drivers() {
       var x = Math.cos(lat1)*Math.sin(lat2) -Math.sin(lat1)*Math.cos(lat2)*Math.cos(lng2-lng1);
       var brng = Math.atan2(y, x) * (180/Math.PI);
       console.log(brng);
-      var oldBrng = driver.marker._icon.style.transform.split("rotate(")[1];
+      var oldBrng = driver.marker._icon.style.transform.split('rotate(')[1];
 
       driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
 
       if (brng == 0) {
-        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + oldBrng;
+        driver.marker._icon.style.transform = driver.marker._icon.style.transform + ' rotate(' + oldBrng;
       } else {
-        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + brng + "deg)";
+        driver.marker._icon.style.transform = driver.marker._icon.style.transform + ' rotate(' + brng + 'deg)';
       }
     } else {
       var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
@@ -301,4 +300,8 @@ function display_points() {
      L.marker(L.latLng(step.lat, step.lng)).addTo(map);
    });
  });
+}
+
+function delete_bot(id) {
+  console.log(id);
 }
