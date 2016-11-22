@@ -7,7 +7,7 @@ var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d
 var featureGroup = L.featureGroup().addTo(map);
 var polygon = null;
 var drivers = [];
-var socket = io('http://localhost:3000');
+var socket = io('https://bumblebee-bot.herokuapp.com');
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: featureGroup,
@@ -132,7 +132,7 @@ $('#list').click(function() {
   })
 
   $.ajax({
-    url : 'http://localhost:3000/bots',
+    url : 'https://bumblebee-bot.herokuapp.com/bots',
     success : function(data){
       var html = '';
       data.forEach(function(bot){
@@ -312,7 +312,7 @@ function display_points() {
 function delete_bot(id) {
   $.ajax({
     type: 'DELETE',
-    url : 'http://localhost:3000/bots/' + id
+    url : 'https://bumblebee-bot.herokuapp.com/bots/' + id
   });
   swal.close();
 }
@@ -320,7 +320,7 @@ function delete_bot(id) {
 function pause_bot(id) {
   $.ajax({
     type: 'POST',
-    url : 'http://localhost:3000/bots/' + id + '/deactivate'
+    url : 'https://bumblebee-bot.herokuapp.com/bots/' + id + '/deactivate'
   });
   swal.close();
 }
@@ -328,7 +328,7 @@ function pause_bot(id) {
 function active_bot(id) {
   $.ajax({
     type: 'POST',
-    url : 'http://localhost:3000/bots/' + id + '/active'
+    url : 'https://bumblebee-bot.herokuapp.com/bots/' + id + '/active'
   });
   swal.close();
 }
