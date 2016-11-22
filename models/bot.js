@@ -23,7 +23,7 @@ var botSchema = new Schema({
     }
   },
   active: {type: Boolean, default: true},
-  nb_driver: {type: Number, default: 1, min: 1},
+  nb_driver: {type: Number, default: 1, min: 1, max: 50},
   drivers: [ {type: Schema.ObjectId} ],
   api_key: String,
   json_to_send: String,
