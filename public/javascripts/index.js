@@ -1,4 +1,4 @@
-var mapboxKey = "pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJjaXYwMG1vN3cwMDNqMm5yMXdmMnRma3NpIn0.2C4J5O3_Lc_mXBZSZ8MNBA";
+var mapboxKey = 'pk.eyJ1IjoiZWNvdGFjbyIsImEiOiJjaXYwMG1vN3cwMDNqMm5yMXdmMnRma3NpIn0.2C4J5O3_Lc_mXBZSZ8MNBA';
 L.mapbox.accessToken = mapboxKey;
 var options = {zoomControl: false, attributionControl: false,
         unloadInvisibleTiles: true, detectRetina: true}
@@ -44,17 +44,6 @@ $('#load-close').click(function(){
   map.addControl(L.control.attribution({position: 'bottomright'}));
 });
 
-$('li').click(function() {
-  $("li.active").removeClass("active");
-  $(this).addClass('active');
-});
-
-$('#home').click(function() {
-  if ($('.leaflet-draw').is(':visible')) {
-    drawControl.removeFrom(map);
-  }
-});
-
 $('#add').click(function() {
   if ($('.leaflet-draw').is(':visible')) {
     drawControl.removeFrom(map);
@@ -63,14 +52,15 @@ $('#add').click(function() {
 
   swal.setDefaults({
     animation: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
     customClass: 'animated bounceInLeft',
-    progressSteps: ['1', '2', '3'],
+    progressSteps: ['1', '2'],
     background: '#333',
     confirmButtonColor: '#F8D45C'
   })
 
-  var steps = [
-    {
+  var steps = [{
       title: 'Draw the area',
       text: 'Draw the area where the vehicles will be generated.',
       confirmButtonText: 'Draw &rarr;',
@@ -84,15 +74,7 @@ $('#add').click(function() {
           resolve();
         })
       }
-    },
-    {
-      title: 'Confirm this area',
-      text: 'Do you confirm this area ?',
-      confirmButtonText: 'Yes &rarr;',
-      showCancelButton: true,
-      cancelButtonText: 'Modify',
-    },
-    {
+    }, {
       title: 'Generate the bot',
       html:
         '<input id="bot_name" name="bot_name" class="swal2-input" autofocus placeholder="Bot name" required />' +
@@ -108,7 +90,7 @@ $('#add').click(function() {
           })
         })
       }
-    },
+    }
   ]
 
   var s = swal.queue(steps).then(
@@ -144,21 +126,28 @@ $('#list').click(function() {
     background: '#333',
     confirmButtonColor: '#F8D45C',
     title: 'List of bots',
-    html: "<div id='list-bots'><table><thead><tr>" +
-     "<th>Bot</th><th>Drivers</th><th>Accuracy</th><th>Speed</th><th>ID</th><th>Action</th>" +
-     "</thead></tr><tbody></tbody></table></div>"
+    html: '<div id="list-bots"><table><thead><tr>' +
+     '<th>Bot</th><th>Drivers</th><th>Accuracy</th><th>Speed</th><th>ID</th><th>Actions</th>' +
+     '</thead></tr><tbody></tbody></table></div>'
   })
 
   $.ajax({
     url : 'http://localhost:3000/bots',
     success : function(data){
-      var html = "";
+      var html = '';
       data.forEach(function(bot){
-        html += "<tr><td>" + bot.name + "</td><td>" +
-          bot.nb_driver + "</td><td>" +
-          bot.precision + "</td><td>" +
-          bot.speed + "</td><td>" +
-          bot._id + "</td>" + "<td><input type='checkbox' name='show' checked></td></tr>"
+        html += '<tr><td>' + bot.name + '</td><td>'
+          + bot.nb_driver + '</td><td>'
+          + bot.precision + '</td><td>'
+          + bot.speed + '</td><td>'
+          + bot._id + '</td>' + '<td>'
+          + '<button class="btn btn-primary delete_bot" data-id="'+ bot._id + '">Delete</button>';
+        if (bot.active) {
+          html += '<button class="btn btn-primary pause_bot" data-id="'+ bot._id + '">Pause</button>';
+        } else {
+          html += '<button class="btn btn-primary active_bot" data-id="'+ bot._id + '">Active</button>';
+        }
+        html += '</td></tr>'
         // Display bots polygons
         var points = bot.zone.coordinates[0];
         var polygon = [];
@@ -168,7 +157,18 @@ $('#list').click(function() {
         L.polygon(polygon, {color: '#F8D45C'}).addTo(map);
       })
       $('#list-bots tbody').html(html);
-
+      $('.delete_bot').click(function() {
+        var $el = $(this);
+        delete_bot($el.data('id'));
+      });
+      $('.pause_bot').click(function() {
+        var $el = $(this);
+        pause_bot($el.data('id'));
+      });
+      $('.active_bot').click(function() {
+        var $el = $(this);
+        active_bot($el.data('id'));
+      });
     }
   });
 
@@ -177,6 +177,7 @@ $('#list').click(function() {
   // display_points();
 
 });
+
 
 var hideSwal = function() {
   $('.swal2-container').removeClass('swal2-in')
@@ -190,14 +191,12 @@ var showSwal = function() {
 }
 
 function createBot(result) {
-
-  var baseUrl = "/bots/";
-
+  var baseUrl = '/bots/';
   $.ajax({
-    type: "POST",
-    contentType: "application/json",
+    type: 'POST',
+    contentType: 'application/json',
     url: baseUrl,
-    data: JSON.stringify(result[2]),
+    data: JSON.stringify(result[1]),
     dataType: 'json',
     success: function(qq) {
       swal.resetDefaults()
@@ -217,9 +216,9 @@ function createBot(result) {
     },
     error: function(jqXHR, textStatus, errorThrown) {
       swal.resetDefaults()
-      console.log(jqXHR);
-      console.log(textStatus);
-      console.log(errorThrown);
+      console.error(jqXHR);
+      console.error(textStatus);
+      console.error(errorThrown);
       swal({
         title: 'Error!',
         html:
@@ -268,6 +267,7 @@ function animate_drivers() {
     }
     if (drivers.find(byID, data) !== undefined ) {
       var driver = drivers.find(byID, data)
+<<<<<<< HEAD
       var oldBrng = driver.marker._icon.style.transform.split("rotate(")[1];
 
       driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
@@ -285,7 +285,6 @@ function animate_drivers() {
   });
 }
 function display_trips() {
-
   socket.on('trip', function (data) {
     line_points = []
     data.ride.forEach(function(step){
@@ -309,4 +308,28 @@ function display_points() {
      L.marker(L.latLng(step.lat, step.lng)).addTo(map);
    });
  });
+}
+
+function delete_bot(id) {
+  $.ajax({
+    type: 'DELETE',
+    url : 'http://localhost:3000/bots/' + id
+  });
+  swal.close();
+}
+
+function pause_bot(id) {
+  $.ajax({
+    type: 'POST',
+    url : 'http://localhost:3000/bots/' + id + '/deactivate'
+  });
+  swal.close();
+}
+
+function active_bot(id) {
+  $.ajax({
+    type: 'POST',
+    url : 'http://localhost:3000/bots/' + id + '/active'
+  });
+  swal.close();
 }

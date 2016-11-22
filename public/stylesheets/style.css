@@ -64,6 +64,12 @@
     color: #333;
     text-shadow: none; }
 
+.btn {
+  margin-right: 5px; }
+
+.btn:last-child {
+  margin-right: 0; }
+
 form {
   color: black; }
 
@@ -131,14 +137,7 @@ a {
       border-bottom: 2px solid transparent; }
       .masthead-nav > li > a:hover, .masthead-nav > li > a:focus {
         background-color: transparent;
-        border-bottom-color: #a9a9a9;
         border-bottom-color: rgba(255, 255, 255, 0.25); }
-  .masthead-nav > .active > a {
-    color: #fff;
-    border-bottom-color: #fff; }
-    .masthead-nav > .active > a:hover, .masthead-nav > .active > a:focus {
-      color: #fff;
-      border-bottom-color: #fff; }
 
 @media (min-width: 768px) {
   .masthead-brand {
