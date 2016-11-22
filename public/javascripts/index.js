@@ -174,6 +174,7 @@ $('#list').click(function() {
 
   animate_drivers();
   display_trips();
+  // display_points();
 
 });
 
@@ -235,6 +236,7 @@ function createBot(result) {
 
   animate_drivers();
   display_trips();
+  // display_points();
   /*
 
   marker.setLatLng(L.latLng(step.lat, step.lng));
@@ -309,4 +311,12 @@ function display_trips() {
       weight: 2
     });
   });
+}
+
+function display_points() {
+ socket.on('trip', function(data) {
+   data.ride.forEach(function(step){
+     L.marker(L.latLng(step.lat, step.lng)).addTo(map);
+   });
+ });
 }
