@@ -179,7 +179,7 @@ function createBot(result) {
     type: "POST",
     contentType: "application/json",
     url: baseUrl,
-    data: JSON.stringify(result[2]),
+    data: JSON.stringify(result[1]),
     dataType: 'json',
     success: function(qq) {
       swal.resetDefaults()
