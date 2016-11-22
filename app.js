@@ -13,7 +13,7 @@ var app = express();
 
 // setup connection with MongoDB
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bumblebee');
+mongoose.connect(process.env.MONGODB_URI);
 mongoose.Promise = global.Promise;
 
 // view engine setup
