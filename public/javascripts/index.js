@@ -267,21 +267,15 @@ function animate_drivers() {
     }
     if (drivers.find(byID, data) !== undefined ) {
       var driver = drivers.find(byID, data)
-      var lat1 = driver.marker.getLatLng().lat;
-      var lng1 = driver.marker.getLatLng().lng;
-      var lat2 = data.position.lat;
-      var lng2 = data.position.lng;
-      var y = Math.sin(lng2-lng1) * Math.cos(lat2);
-      var x = Math.cos(lat1)*Math.sin(lat2) -Math.sin(lat1)*Math.cos(lat2)*Math.cos(lng2-lng1);
-      var brng = Math.atan2(y, x) * (180/Math.PI);
-      var oldBrng = driver.marker._icon.style.transform.split('rotate(')[1];
+<<<<<<< HEAD
+      var oldBrng = driver.marker._icon.style.transform.split("rotate(")[1];
 
       driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
 
-      if (brng == 0) {
-        driver.marker._icon.style.transform = driver.marker._icon.style.transform + ' rotate(' + oldBrng;
+      if (data.brng == 0) {
+        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + oldBrng;
       } else {
-        driver.marker._icon.style.transform = driver.marker._icon.style.transform + ' rotate(' + brng + 'deg)';
+        driver.marker._icon.style.transform = driver.marker._icon.style.transform + " rotate(" + data.position.brng + "deg)";
       }
     } else {
       var marker = L.marker(L.latLng(data.position.lat, data.position.lng), {icon: carIcon}).addTo(map);
@@ -295,7 +289,7 @@ function display_trips() {
     line_points = []
     data.ride.forEach(function(step){
       line_points.push(L.latLng(step.lat, step.lng))
-    })
+    });
     var polyline_options = {
       color: '#F8D45C',
       opacity: 0.5
