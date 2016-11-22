@@ -1,26 +1,44 @@
 {
   "name": "bumblebee-bot",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Generate realtime driver bots with trips",
   "main": "index.js",
-  "dependencies": {
-    "bootstrap": "^3.3.7",
-    "dotenv": "^2.0.0",
-    "express": "^4.14.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ecotaco/bumblebee-bot.git"
-  },
   "author": "Maxime Lenne, Gabriel de Vareilles, (http://mobilityz.io)",
   "license": "(MIT)",
   "bugs": {
     "url": "https://github.com/Ecotaco/bumblebee-bot/issues"
   },
-  "homepage": "https://github.com/Ecotaco/bumblebee-bot#readme"
+  "homepage": "https://github.com/Ecotaco/bumblebee-bot#readme",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "debug": "nodemon --inspect ./bin/www",
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ecotaco/bumblebee-bot.git"
+  },
+  "dependencies": {
+    "@google/maps": "^0.3.0",
+    "body-parser": "~1.15.2",
+    "chai-as-promised": "^6.0.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "dotenv": "^2.0.0",
+    "express": "~4.14.0",
+    "kue": "^0.11.5",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.6",
+    "mongoose-timestamp": "^0.6.0",
+    "morgan": "~1.7.0",
+    "node-sass-middleware": "0.9.8",
+    "pug": "~2.0.0-beta6",
+    "serve-favicon": "~2.3.0",
+    "socket.io": "^1.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
 }
