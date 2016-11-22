@@ -198,9 +198,9 @@ function createBot(result) {
     },
     error: function(jqXHR, textStatus, errorThrown) {
       swal.resetDefaults()
-      console.log(jqXHR);
-      console.log(textStatus);
-      console.log(errorThrown);
+      console.error(jqXHR);
+      console.error(textStatus);
+      console.error(errorThrown);
       swal({
         title: 'Error!',
         html:
@@ -244,7 +244,6 @@ function animate_drivers() {
   carIcon = new LeafIcon({iconUrl: '/images/car.svg'});
 
   socket.on('notification', function (data) {
-    //console.log(data);
     function byID(element) {
       return element.id === this.id;
     }
@@ -257,7 +256,6 @@ function animate_drivers() {
       var y = Math.sin(lng2-lng1) * Math.cos(lat2);
       var x = Math.cos(lat1)*Math.sin(lat2) -Math.sin(lat1)*Math.cos(lat2)*Math.cos(lng2-lng1);
       var brng = Math.atan2(y, x) * (180/Math.PI);
-      console.log(brng);
       var oldBrng = driver.marker._icon.style.transform.split('rotate(')[1];
 
       driver.marker.setLatLng(L.latLng(data.position.lat, data.position.lng));
@@ -275,13 +273,11 @@ function animate_drivers() {
   });
 }
 function display_trips() {
-
   socket.on('trip', function (data) {
     line_points = []
     data.ride.forEach(function(step){
       line_points.push(L.latLng(step.lat, step.lng))
     })
-    console.log(data);
     var polyline_options = {
       color: '#F8D45C',
       opacity: 0.5
