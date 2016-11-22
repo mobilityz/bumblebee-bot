@@ -174,7 +174,7 @@ $('#list').click(function() {
 
   animate_drivers();
   display_trips();
-  display_points();
+  // display_points();
 
 });
 
@@ -236,7 +236,7 @@ function createBot(result) {
 
   animate_drivers();
   display_trips();
-  display_points();
+  // display_points();
   /*
 
   marker.setLatLng(L.latLng(step.lat, step.lng));
