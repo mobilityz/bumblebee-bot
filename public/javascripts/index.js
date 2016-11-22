@@ -141,8 +141,13 @@ $('#list').click(function() {
           + bot.precision + '</td><td>'
           + bot.speed + '</td><td>'
           + bot._id + '</td>' + '<td>'
-          + '<button onclick="delete_bot('+ bot.id + ')">Delete</button>'
-          + '</td></tr>'
+          + '<button class="btn btn-primary delete_bot" data-id="'+ bot._id + '">Delete</button>';
+        if (bot.active) {
+          html += '<button class="btn btn-primary pause_bot" data-id="'+ bot._id + '">Pause</button>';
+        } else {
+          html += '<button class="btn btn-primary active_bot" data-id="'+ bot._id + '">Active</button>';
+        }
+        html += '</td></tr>'
         // Display bots polygons
         var points = bot.zone.coordinates[0];
         var polygon = [];
@@ -152,6 +157,18 @@ $('#list').click(function() {
         L.polygon(polygon, {color: '#F8D45C'}).addTo(map);
       })
       $('#list-bots tbody').html(html);
+      $('.delete_bot').click(function() {
+        var $el = $(this);
+        delete_bot($el.data('id'));
+      });
+      $('.pause_bot').click(function() {
+        var $el = $(this);
+        pause_bot($el.data('id'));
+      });
+      $('.active_bot').click(function() {
+        var $el = $(this);
+        active_bot($el.data('id'));
+      });
     }
   });
 
@@ -160,6 +177,7 @@ $('#list').click(function() {
   // display_points();
 
 });
+
 
 var hideSwal = function() {
   $('.swal2-container').removeClass('swal2-in')
@@ -299,5 +317,25 @@ function display_points() {
 }
 
 function delete_bot(id) {
-  console.log(id);
+  $.ajax({
+    type: 'DELETE',
+    url : 'http://localhost:3000/bots/' + id
+  });
+  swal.close();
+}
+
+function pause_bot(id) {
+  $.ajax({
+    type: 'POST',
+    url : 'http://localhost:3000/bots/' + id + '/deactivate'
+  });
+  swal.close();
+}
+
+function active_bot(id) {
+  $.ajax({
+    type: 'POST',
+    url : 'http://localhost:3000/bots/' + id + '/active'
+  });
+  swal.close();
 }
