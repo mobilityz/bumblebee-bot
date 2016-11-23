@@ -7,7 +7,8 @@ var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d
 var featureGroup = L.featureGroup().addTo(map);
 var polygon = null;
 var drivers = [];
-var socket = io('http://localhost:3000');
+var host_back =  window.location.origin;
+var socket = io(host_back);
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: featureGroup,
@@ -141,7 +142,7 @@ $('#list').click(function() {
   })
 
   $.ajax({
-    url : 'http://localhost:3000/bots',
+    url : host_back + '/bots',
     success : function(data){
       var html = '';
       data.forEach(function(bot){
@@ -321,7 +322,7 @@ function display_points() {
 function delete_bot(id) {
   $.ajax({
     type: 'DELETE',
-    url : 'http://localhost:3000/bots/' + id
+    url : host_back + '/bots/' + id
   });
   swal.close();
 }
@@ -329,7 +330,7 @@ function delete_bot(id) {
 function pause_bot(id) {
   $.ajax({
     type: 'POST',
-    url : 'http://localhost:3000/bots/' + id + '/deactivate'
+    url : host_back + '/bots/' + id + '/deactivate'
   });
   swal.close();
 }
@@ -337,7 +338,7 @@ function pause_bot(id) {
 function active_bot(id) {
   $.ajax({
     type: 'POST',
-    url : 'http://localhost:3000/bots/' + id + '/active'
+    url : host_back + '/bots/' + id + '/active'
   });
   swal.close();
 }
