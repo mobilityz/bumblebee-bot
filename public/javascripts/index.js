@@ -7,7 +7,9 @@ var styleLayer = L.mapbox.styleLayer('mapbox://styles/ecotaco/civ00flry01gx2jl8d
 var featureGroup = L.featureGroup().addTo(map);
 var polygon = null;
 var drivers = [];
-var socket = io('https://bumblebee-bot.herokuapp.com');
+var host_back =  window.location.origin;
+var socket = io(host_back);
+
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: featureGroup,
@@ -78,16 +80,25 @@ $('#add').click(function() {
       title: 'Generate the bot',
       html:
         '<input id="bot_name" name="bot_name" class="swal2-input" autofocus placeholder="Bot name" required />' +
-        '<input id="nb_driver" name="nb_driver" class="swal2-input" type="number" min="0" value="5" placeholder="Number of generated bot" required />',
+        '<input id="nb_driver" name="nb_driver" class="swal2-input" type="number" min="0" max="50" placeholder="Number of generated bot" required />' +
+        '<input id="accuracy" name="accuracy" class="swal2-input" type="number" min="10" max="100" step="10" placeholder="Accuracy" required />',
       confirmButtonText: 'Generate',
       showCancelButton: true,
       preConfirm: function() {
-        return new Promise(function(resolve) {
-          resolve({
-            name: $('#bot_name').val(),
-            nb_driver: parseInt($('#nb_driver').val()),
-            zone: polygon,
-          })
+        return new Promise(function(resolve, reject) {
+          var name = $('#bot_name').val();
+          var nb_driver = parseInt($('#nb_driver').val());
+          var accuracy = parseInt($('#accuracy').val());
+
+          if (parseInt($('#nb_driver').val()) < 50) {
+            resolve({
+              name: name,
+              nb_driver: nb_driver,
+              zone: polygon,
+            })
+          } else {
+            reject('50 drivers maximum!')
+          }
         })
       }
     }
@@ -132,7 +143,7 @@ $('#list').click(function() {
   })
 
   $.ajax({
-    url : 'https://bumblebee-bot.herokuapp.com/bots',
+    url : host_back + '/bots',
     success : function(data){
       var html = '';
       data.forEach(function(bot){
@@ -302,17 +313,17 @@ function display_trips() {
 }
 
 function display_points() {
- socket.on('trip', function(data) {
-   data.ride.forEach(function(step){
-     L.marker(L.latLng(step.lat, step.lng)).addTo(map);
-   });
- });
+  socket.on('trip', function(data) {
+    data.ride.forEach(function(step){
+      L.marker(L.latLng(step.lat, step.lng)).addTo(map);
+    });
+  });
 }
 
 function delete_bot(id) {
   $.ajax({
     type: 'DELETE',
-    url : 'https://bumblebee-bot.herokuapp.com/bots/' + id
+    url : host_back + '/bots/' + id
   });
   swal.close();
 }
@@ -320,7 +331,7 @@ function delete_bot(id) {
 function pause_bot(id) {
   $.ajax({
     type: 'POST',
-    url : 'https://bumblebee-bot.herokuapp.com/bots/' + id + '/deactivate'
+    url : host_back + '/bots/' + id + '/deactivate'
   });
   swal.close();
 }
@@ -328,7 +339,7 @@ function pause_bot(id) {
 function active_bot(id) {
   $.ajax({
     type: 'POST',
-    url : 'https://bumblebee-bot.herokuapp.com/bots/' + id + '/active'
+    url : host_back + '/bots/' + id + '/active'
   });
   swal.close();
 }
