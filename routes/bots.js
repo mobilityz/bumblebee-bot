@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
   newBot.save()
   .then(function(bot) {
     bot.drivers.forEach(function(id_driver) {
-      job.driver_new_trip(id_driver);
+      job.driver_new_trip(bot.id, id_driver);
     });
     res.send(bot);
   })
@@ -63,7 +63,7 @@ router.post('/:id/active', function(req, res, next) {
   Bot.findByIdAndUpdate({_id: req.params.id}, {active: true})
   .then(function(bot) {
     bot.drivers.forEach(function(id_driver) {
-      job.driver_new_trip(id_driver);
+      job.driver_new_trip(bot.id, id_driver);
     });
     res.send();
   })

@@ -311,11 +311,11 @@ function display_trips() {
 }
 
 function display_points() {
- socket.on('trip', function(data) {
-   data.ride.forEach(function(step){
-     L.marker(L.latLng(step.lat, step.lng)).addTo(map);
-   });
- });
+  socket.on('trip', function(data) {
+    data.ride.forEach(function(step){
+      L.marker(L.latLng(step.lat, step.lng)).addTo(map);
+    });
+  });
 }
 
 function delete_bot(id) {

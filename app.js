@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var kue = require('kue');
 
 var index = require('./routes/index');
 var bots = require('./routes/bots');
@@ -13,7 +14,7 @@ var app = express();
 
 // setup connection with MongoDB
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bumblebee');
+mongoose.connect(process.env.MONGODB_URI);
 mongoose.Promise = global.Promise;
 
 // view engine setup
@@ -36,6 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/bots', bots);
+
+app.use('/kue', kue.app)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

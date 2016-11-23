@@ -25,7 +25,7 @@ describe('Bot()', function() {
     expect(newBot.url).to.equal(undefined);
     expect(newBot.http_method).to.equal(undefined);
     expect(newBot.speed).to.equal(30);
-    expect(newBot.precision).to.equal(20);
+    expect(newBot.precision).to.equal(1000);
   });
 });
 
