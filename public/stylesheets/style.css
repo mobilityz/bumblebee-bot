@@ -29,17 +29,20 @@
   margin-right: auto;
   margin-left: auto; }
 
-::-webkit-input-placeholder {
+.swal2-modal .swal2-input::-webkit-input-placeholder {
   color: #333; }
 
-:-moz-placeholder {
+.swal2-modal .swal2-input:-moz-placeholder {
   color: #333; }
 
-::-moz-placeholder {
+.swal2-modal .swal2-input::-moz-placeholder {
   color: #333; }
 
-:-ms-input-placeholder {
+.swal2-modal .swal2-input:-ms-input-placeholder {
   color: #333; }
+
+.swal2-modal .swal2-input[type=number] {
+  max-width: 100%; }
 
 @media (min-width: 768px) {
   .masthead {
@@ -119,7 +122,7 @@ a {
   color: #333; }
 
 .swal2-modal .swal2-input {
-  padding: 0 0px;
+  padding: 0 20px;
   margin: 10px auto; }
 
 #list-bots th {
