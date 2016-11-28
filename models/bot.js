@@ -31,7 +31,7 @@ var botSchema = new Schema({
   url: String,
   http_method: String,
   speed: {type: Number, default: 30, min: 1},
-  precision: {type: Number, default: 1000, min: 1}
+  precision: {type: Number, default: 1000, min: 500, required: true}
 });
 
 botSchema.index({ zone : '2dsphere' });

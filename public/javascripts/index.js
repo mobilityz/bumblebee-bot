@@ -81,23 +81,32 @@ $('#add').click(function() {
       html:
         '<p><input id="bot_name" name="bot_name" class="swal2-input" autofocus placeholder="Bot name" required /></p>' +
         '<p><input id="nb_driver" name="nb_driver" class="swal2-input" type="number" min="0" max="50" placeholder="Number of generated driver" required /></p>' +
-        '<p><input id="accuracy" name="accuracy" class="swal2-input" type="number" min="10" max="100" step="10" placeholder="Accuracy" required /></p>',
+        '<p><input id="precision" name="precision" class="swal2-input" type="number" min="500" max="10000" step="10" placeholder="Precision in ms (time to push data)" /></p>' +
+        '',
       confirmButtonText: 'Generate',
       showCancelButton: true,
       preConfirm: function() {
         return new Promise(function(resolve, reject) {
           var name = $('#bot_name').val();
           var nb_driver = parseInt($('#nb_driver').val());
-          var accuracy = parseInt($('#accuracy').val());
-
-          if (parseInt($('#nb_driver').val()) < 50) {
+          var precision = parseInt($('#precision').val());
+          if (! $('#bot_name').val()) {
+            reject('Bot name mandatory!')
+          } else if (! $('#nb_driver').val()) {
+            reject('Nb driver mandatory!')
+          } else if (parseInt($('#nb_driver').val()) > 50) {
+            reject('50 drivers maximum!')
+          } else if (! $('#precision').val()) {
+            reject('Precision mandatory!')
+          } else if (parseInt($('#precision').val()) < 500) {
+            reject('precision must be greater than 500!')
+          } else {
             resolve({
               name: name,
               nb_driver: nb_driver,
               zone: polygon,
+              precision: precision
             })
-          } else {
-            reject('50 drivers maximum!')
           }
         })
       }
@@ -138,7 +147,7 @@ $('#list').click(function() {
     confirmButtonColor: '#F8D45C',
     title: 'List of bots',
     html: '<div id="list-bots"><table><thead><tr>' +
-     '<th>Bot</th><th>Drivers</th><th>Accuracy</th><th>Speed</th><th>ID</th><th>Actions</th>' +
+     '<th>Bot</th><th>Drivers</th><th>Precision</th><th>Speed</th><th>ID</th><th>Actions</th>' +
      '</thead></tr><tbody></tbody></table></div>'
   })
 
