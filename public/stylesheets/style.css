@@ -29,6 +29,18 @@
   margin-right: auto;
   margin-left: auto; }
 
+::-webkit-input-placeholder {
+  color: #333; }
+
+:-moz-placeholder {
+  color: #333; }
+
+::-moz-placeholder {
+  color: #333; }
+
+:-ms-input-placeholder {
+  color: #333; }
+
 @media (min-width: 768px) {
   .masthead {
     position: fixed;
@@ -105,6 +117,10 @@ a {
 
 .swal2-modal input[placeholder], .swal2-modal [placeholder], .swal2-modal *[placeholder] {
   color: #333; }
+
+.swal2-modal .swal2-input {
+  padding: 0 0px;
+  margin: 10px auto; }
 
 #list-bots th {
   text-align: center;
