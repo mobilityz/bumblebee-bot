@@ -9,6 +9,7 @@ var polygon = null;
 var drivers = [];
 var host_back =  window.location.origin;
 var socket = io(host_back);
+
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: featureGroup,
