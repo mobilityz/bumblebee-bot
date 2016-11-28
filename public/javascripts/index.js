@@ -78,9 +78,9 @@ $('#add').click(function() {
     }, {
       title: 'Generate the bot',
       html:
-        '<input id="bot_name" name="bot_name" class="swal2-input" autofocus placeholder="Bot name" required />' +
-        '<input id="nb_driver" name="nb_driver" class="swal2-input" type="number" min="0" max="50" placeholder="Number of generated bot" required />' +
-        '<input id="accuracy" name="accuracy" class="swal2-input" type="number" min="10" max="100" step="10" placeholder="Accuracy" required />',
+        '<p><input id="bot_name" name="bot_name" class="swal2-input" autofocus placeholder="Bot name" required /></p>' +
+        '<p><input id="nb_driver" name="nb_driver" class="swal2-input" type="number" min="0" max="50" placeholder="Number of generated bot" required /></p>' +
+        '<p><input id="accuracy" name="accuracy" class="swal2-input" type="number" min="10" max="100" step="10" placeholder="Accuracy" required /></p>',
       confirmButtonText: 'Generate',
       showCancelButton: true,
       preConfirm: function() {
