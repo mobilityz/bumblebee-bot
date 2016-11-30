@@ -8,7 +8,7 @@ var kue = require('kue');
 
 var index = require('./routes/index');
 var bots = require('./routes/bots');
-var config = require('dotenv').config();
+require('dotenv').config({silent: true});
 
 var app = express();
 
