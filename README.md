@@ -9,12 +9,14 @@ Generate realtime driver bot with random trips.
 We recomand the utilisation of [nvm](https://github.com/creationix/nvm).
 
 Install MongoDB
+`brew install mongodb`
 
 Install Redis
+`brew install redis`
 
 ## Instalation
 
-    npm install
+npm install
 
 ## Configuration
 
@@ -28,5 +30,11 @@ PORT=3000
 ```
 
 ## Launch
+Start mongodb :
+`mongod`
 
-    npm start
+Start redis server :
+`redis-server /usr/local/etc/redis.conf`
+
+Start application :
+`npm start`
